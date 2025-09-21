@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Purple Heart App</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+
+        <script>
+            user = sessionStorage.getItem('user');
+            if (user == null) {
+                email = localStorage.getItem('email');
+                if(email){
+                    window.location = "login.html";    
+                }
+            } else {
+                window.location = "home.html";
+            }
+        </script>
+</head>
+
+<body>
+    
+
+    <!-- App Header -->
+    <div class="appHeader no-border transparent" id="appHead">
+        <div class="left">
+            
+        </div>
+        <div class="pageTitle"></div>
+        <div class="right">
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+        <!-- carousel slider -->
+        <div class="carousel-slider splide">
+            <div class="splide__track">
+                <ul class="splide__list">
+                    <li class="splide__slide p-2">
+                        <img src="assets/img/slider/1.png" alt="alt" class="imaged w-100 square mb-4">
+                        <h2>Welcome to Purple Heart Widows App!</h2>
+                        <p>A community of strength and shared experience</p>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <img src="assets/img/slider/2.jpeg" alt="alt" class="imaged w-100 square mb-4">
+                        <h2>Relatable discussions</h2>
+                        <p>Community conversations: Share, learn, and support</p>
+                    </li>
+                    <li class="splide__slide p-2">
+                        <img src="assets/img/slider/3.jpg" alt="alt" class="imaged w-100 square mb-4">
+                        <h2>Be inspired by others</h2>
+                        <p>Read success stories and blog</p>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <!-- * carousel slider -->
+
+        <div class="carousel-button-footer">
+            <div class="row">
+                <div class="col-6">
+                    <a href="register.html" class="btn btn-outline-secondary btn-lg btn-block">Register</a>
+                </div>
+                <div class="col-6">
+                    <a href="login.html" class="btn btn-primary btn-lg btn-block">Login</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+       <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+    <script>
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appHead',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+</body>
+</html>

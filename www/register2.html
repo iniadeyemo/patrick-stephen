@@ -1,0 +1,465 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Complete Registration</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen">
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- App Header -->
+        <div class="appHeader no-border transparent position-absolute" id="appHead">
+            <div class="left">
+                
+            </div>
+            <div class="pageTitle"></div>
+            <div class="right">
+                
+            </div>
+        </div>
+        <!-- * App Header -->
+
+        <!-- App Capsule -->
+        <div id="appCapsule">
+
+            <div class="section mt-5 mb-2">
+                
+                <h1 class="mb-2">Complete your registration</h1>
+                <h4 class="section_caption fw-light">Experience maximum fun when you create an account</h4>
+            </div>
+
+            <div class="section mb-5" style="padding: 0;">
+
+                <div class="card shadow-none">
+                    <div class="card-body  pb-1">
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                
+                                <input type="text" class="form-control custom_input pt-4 pb-4" id="fullname" placeholder="Fullname">
+                                <i class="clear-input">
+                                    <i class='bi bi-x-circle-fill text-danger'></i>
+                                </i>
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold" id="fullname_error"></div>
+                        </div>
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="email" class="form-control custom_input pt-4 pb-4" id="email" placeholder="Email" disabled>
+                            </div>
+                        </div>
+
+                        <!--
+                        <div class="form-group boxed">
+                            <div class="input-wrapper w-50">
+                                <select class="form-control custom-select pt-4 pb-4" id="country">
+                                    <option value="state" selected>Select State</option>
+                                    <option value="Abuja FCT">Abuja FCT</option>
+                                    <option value="Abia">Abia</option>
+                                    <option value="Adamawa">Adamawa</option>
+                                    <option value="Akwa Ibom">Akwa Ibom</option>
+                                    <option value="Anambra">Anambra</option>
+                                    <option value="Bauchi">Bauchi</option>
+                                    <option value="Bayelsa">Bayelsa</option>
+                                    <option value="Benue">Benue</option>
+                                    <option value="Borno">Borno</option>
+                                    <option value="Cross River">Cross River</option>
+                                    <option value="Delta">Delta</option>
+                                    <option value="Ebonyi">Ebonyi</option>
+                                    <option value="Edo">Edo</option>
+                                    <option value="Ekiti">Ekiti</option>
+                                    <option value="Enugu">Enugu</option>
+                                    <option value="Gombe">Gombe</option>
+                                    <option value="Imo">Imo</option>
+                                    <option value="Jigawa">Jigawa</option>
+                                    <option value="Kaduna">Kaduna</option>
+                                    <option value="Kano">Kano</option>
+                                    <option value="Katsina">Katsina</option>
+                                    <option value="Kebbi">Kebbi</option>
+                                    <option value="Kogi">Kogi</option>
+                                    <option value="Kwara">Kwara</option>
+                                    <option value="Lagos">Lagos</option>
+                                    <option value="Nassarawa">Nassarawa</option>
+                                    <option value="Niger">Niger</option>
+                                    <option value="Ogun">Ogun</option>
+                                    <option value="Ondo">Ondo</option>
+                                    <option value="Osun">Osun</option>
+                                    <option value="Oyo">Oyo</option>
+                                    <option value="Plateau">Plateau</option>
+                                    <option value="Rivers">Rivers</option>
+                                    <option value="Sokoto">Sokoto</option>
+                                    <option value="Taraba">Taraba</option>
+                                    <option value="Yobe">Yobe</option>
+                                    <option value="Zamfara">Zamfara</option>
+                                </select>
+                                
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold" id="state_error"></div>
+                        </div>
+                        -->
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control custom_input pt-4 pb-4" id="password" placeholder="Password" oninput="chkpass()">
+                            </div>
+                            <div class="input-info  px-3 pb-0">
+                                <ul>
+                                    <li class="text-secondary" id="upper_error">Must contain one uppercase </li>
+                                    <li class="text-secondary" id="lower_error">Must contain one lowercase</li>
+                                    <li  class ="text-secondary" id="number_error">Must contain number</li>
+                                    <li  class ="text-secondary" id="char_error">Must contain at least six (6) characters</li>
+                                </ul>
+                            </div>
+                            <div class="input-info text-danger px-3" id="password_error"></div>
+                            
+                        </div>
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control custom_input pt-4 pb-4" id="confirmpassword" placeholder="Confirm Password" oninput="chkpass()">
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold" id="cpassword_error"></div>
+                        </div>
+                        
+                    </div>
+                </div>
+
+                <div class="form-group p-2 transparent">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="regbtn">Complete Registration</button>
+                </div>
+
+                
+
+
+                
+                
+            </div>
+
+        </div>
+        <!-- * App Capsule -->
+
+        <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content border">
+                    <div class="modal-icon" id='resicon'>
+                       
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id='restitle'></h5>
+                    </div>
+                    <div class="modal-body" id = "resbody">
+    
+                        
+                    </div>
+                    <div class="modal-footer" id="resfooter">
+                        <div class="btn-inline">
+                            <a  class="btn btn-secondary" data-bs-dismiss="modal">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+
+    </div>
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+    <script type="text/javascript">
+        user = sessionStorage.getItem('user');
+        
+        if (user !== null) {
+            window.location = "home.html";
+        }
+
+        function chkpass(){
+            var reg_password = $("#password").val();
+            var reg_cpassword = $("#confirmpassword").val();
+            
+            i_pass2 = document.getElementById("confirmpassword");
+            i_pass1 = document.getElementById("password");
+            char_error = document.getElementById("char_error");
+            lower_error = document.getElementById("lower_error");
+            upper_error = document.getElementById("upper_error");
+            number_error = document.getElementById("number_error");
+            var err = 1;
+
+            if (reg_password !== reg_cpassword){
+                
+                i_pass2.classList.add("border-danger");
+
+            }else{
+                i_pass2.classList.remove("border-danger");
+               
+                i_pass2.classList.add("border-success");
+            }
+
+            if ($.trim(reg_password).length < 6){
+                err = 1;
+               
+                char_error.classList.remove("text-secondary");
+                char_error.classList.add("text-danger");
+
+            }else{
+                err = 0;
+                
+                char_error.classList.remove("text-danger");
+                char_error.classList.add("text-success");
+            }
+
+            if(!/[a-z]/.test(reg_password) ){
+                err = 1;
+                
+               lower_error.classList.remove("text-secondary");
+                lower_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                lower_error.classList.remove("text-danger");
+                lower_error.classList.add("text-success");
+            }
+         
+            if(!/[A-Z]/.test(reg_password) ){
+                err = 1;
+                
+               upper_error.classList.remove("text-secondary");
+                upper_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                upper_error.classList.remove("text-danger");
+                upper_error.classList.add("text-success");
+            }
+
+            if(!/[0-9]/.test(reg_password) ){
+                err = 1;
+                
+               number_error.classList.remove("text-secondary");
+               number_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                number_error.classList.remove("text-danger");
+                number_error.classList.add("text-success");
+            }
+
+            if (err === 1){
+                i_pass1.classList.add("border-danger");
+            }else if (err === 0){
+                i_pass1.classList.remove("border-danger");
+                i_pass1.classList.add("border-success");
+            }
+        }
+
+        
+
+        $(document).ready(function() {
+
+            var email = params.get('email');
+            
+            document.getElementById("email").value = email;
+
+            $("#regbtn").click(function() {
+
+                $("#regbtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                var reg_fullname = $("#fullname").val();
+                var reg_password = $("#password").val();
+                var reg_cpassword = $("#confirmpassword").val();
+                
+                document.getElementById("fullname_error").innerHTML = "";
+                
+                document.getElementById("password_error").innerHTML = "";
+                document.getElementById("cpassword_error").innerHTML = "";
+
+                var in_fullname = document.getElementById("fullname");
+                in_fullname.classList.remove("border-danger");
+                
+
+                var in_password = document.getElementById("password");
+                in_password.classList.remove("border-danger");
+                var in_cpassword = document.getElementById("confirmpassword");
+                in_cpassword.classList.remove("border-danger");
+
+
+                document.getElementById("regbtn").disabled = true;
+
+                
+
+                if (reg_fullname == ""){
+                    in_fullname.classList.add("border-danger");
+                    document.getElementById("fullname_error").innerHTML = "Please enter a valid name";
+                    window.location = "#fullname";
+
+                    document.getElementById("regbtn").disabled = false;
+                $("#regbtn").html('Register');
+                                        
+                }else if(reg_password == ""){
+                    in_password.classList.add("border-danger");
+                    document.getElementById("password_error").innerHTML = "Please enter a valid password";
+                    window.location = "#password";
+
+                    document.getElementById("regbtn").disabled = false;
+                $("#regbtn").html('Register');
+
+                }else if(reg_cpassword == ""){
+                    in_cpassword.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("cpassword_error").innerHTML = "Please confirm password";
+                    window.location = "#confirmpassword";
+
+                    document.getElementById("regbtn").disabled = false;
+                $("#regbtn").html('Register');
+
+                }else if ($.trim(reg_password).length < 6){
+                    in_password.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("password_error").innerHTML = "Password has to be at least six (6) characters";
+                    window.location = "#password";
+
+                    document.getElementById("regbtn").disabled = false;
+                $("#regbtn").html('Register');
+
+                }else if(!/[a-z]/.test(reg_password) || !/[A-Z]/.test(reg_password) || !/[0-9]/.test(reg_password)) {
+                    in_password.classList.add("border-danger");
+                    window.location = "#password";
+
+                    document.getElementById("regbtn").disabled = false;
+                $("#regbtn").html('Register');
+                    
+                }else if(reg_password !== reg_cpassword){
+                    in_password.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("cpassword_error").innerHTML = "Password don't match";
+                    window.location = "#confirmpassword";
+
+                    document.getElementById("regbtn").disabled = false;
+                    $("#regbtn").html('Register');
+                }else{
+
+                    var postData = {
+                        email: email,
+                        fullname: reg_fullname,
+                        password: reg_password
+                    };
+
+                    
+                    if ($.trim(email).length > 0 ) {
+                        $.ajax({
+                            type: "POST",
+                            url: SITE_URL+"signup2.php",
+                            data: JSON.stringify(postData),
+                            crossDomain: true,
+                            cache: false,
+                            contentType:"application/json",
+                            dataType:"JSON", 
+                            beforeSend: function() {
+                                $("#regbtn").html('Processing <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+                            },
+                            success: function(response) {
+                                document.getElementById("regbtn").disabled = false;
+                                $("#regbtn").html('Register');
+
+                                if (response.length > 0 ){
+                                    data = response[0].status;
+
+                                    if (data == "success") {
+                                        $("#resicon").html("<i class='bi bi-patch-check-fill text-success'></i>");
+                                        $("#restitle").html("Registraton complete");
+                                        $("#resbody").html("The registration process is complete. You can now log in to your account");
+                                        $("#resfooter").html("<div class='btn-inline'><a href='login.html' class='btn btn-text-primary'>Login</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                        
+                                    
+                                    }else {
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Connection Error");
+                                        $("#resbody").html("An error occured. Please try again");
+                                        $("#resfooter").html("<div class='btn-inline'><a  class='btn btn-text-primary' data-bs-dismiss='modal'>Ok</a></div>");
+                                        
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+
+                                    }
+                                }else{
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server Error");
+                                    $("#resbody").html("Couldn't process data. Please try again");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown){
+
+                                document.getElementById("regbtn").disabled = false;
+                                $("#regbtn").html('Register');
+
+                                if (textStatus === 'timeout'){
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Bad network connection");
+                                    $("#resbody").html("Connection seems poor or offline");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }else{
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server connection");
+                                    $("#resbody").html("Error in connection to server");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }
+                            }
+                        });
+                    } else {
+
+                        document.getElementById("regbtn").disabled = false;
+                        $("#regbtn").html('Register');
+                        
+                    }
+                    //return false;
+                }
+
+
+            });
+                
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appHead',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

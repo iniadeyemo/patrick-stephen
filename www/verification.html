@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="en">
+
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+        <meta name="viewport"
+            content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+        <meta name="apple-mobile-web-app-capable" content="yes" />
+        <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+        <meta name="theme-color" content="#561370">
+        <title>Verify</title>
+        <meta name="description" content="Patrick Stephen Widow App">
+        <meta name="keywords"
+            content="widows, foundation, patrick stephen" >
+        <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+        <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+        <link rel="stylesheet" href="assets/css/style.css">
+        <link rel="manifest" href="manifest.json">
+
+        <script src="assets/js/jquery.min.js"></script>
+        <script src="assets/js/index.js"></script>
+           <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="app">
+        <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+        <!-- App Header -->
+        <div class="appHeader no-border transparent position-absolute" id="appHead">
+            <div class="left">
+            </div>
+            <div class="pageTitle"></div>
+            <div class="right">
+            </div>
+        </div>
+        <!-- * App Header -->
+
+        <!-- App Capsule -->
+        <div id="appCapsule">
+
+            <div class="section mt-5 mb-2">
+                <h1 class="mb-2 ">Email verification</h1>
+                <h4 class="section_caption fw-light">
+                    Enter the 4 digit code that was sent to your email address
+                    to confirm your email address
+                </h4>
+            </div>
+
+            <div class="section mb-5" style="padding: 0;">
+                <div class="card shadow-none" >
+                    <div class="card-body  pb-1">
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="number" class="form-control verification-input " id="emailcode" placeholder="••••"
+                                    maxlength="4">
+                                <div class="input-info text-danger px-3 fw-bold" id="email_error"></div>
+                            </div>    
+                        </div>
+
+                       
+                    </div>
+                </div>
+
+                <div class="form-group p-2 transparent">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="verbtn">Verify</button>
+                </div>
+
+                <div class=" m-2 mb-5 text-center">
+                    <div>
+                        Didn't receive any code? 
+                        <a  onclick="emailCheck()" class="text-primary text-bold">Resend code</a> 
+                    </div>
+                </div>
+                
+            </div>
+
+        </div>
+        <!-- * App Capsule -->
+
+
+        <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content border">
+                    <div class="modal-icon" id='resicon'>
+                       
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id='restitle'></h5>
+                    </div>
+                    <div class="modal-body" id = "resbody">
+    
+                        
+                    </div>
+                    <div class="modal-footer" id="resfooter">
+                        <div class='btn-inline'><a  class='btn btn-text-secondary' data-bs-dismiss='modal'>OK</a></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+
+        var user = "";
+
+        if (typeof sessionStorage == 'undefined') {
+
+        } else {
+            user = sessionStorage.getItem('user');
+
+
+        }
+        if (user !== null) {
+            window.location = "home.html";
+        }
+
+        $(document).ready(function() {
+            emailCheck();
+
+            $("#verbtn").click(function() {
+
+                var ver_pin = $("#emailcode").val();
+
+                input_verpin = document.getElementById("emailcode");
+                document.getElementById("email_error").innerHTML = "";
+                input_verpin.classList.remove("border-danger");
+
+                document.getElementById("emailcode").readOnly = true;
+                document.getElementById("verbtn").disabled = true;
+
+                $("#verbtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                if (ver_pin == ""){
+
+                    document.getElementById("email_error").innerHTML = "Please enter a valid verification pin";
+                    input_verpin.classList.add("border-danger");
+
+                    document.getElementById("emailcode").readOnly = false;
+                    document.getElementById("verbtn").disabled = false;
+                    $("#verbtn").html('Verify');
+                                        
+                }else{
+                    var email = params.get('email');
+
+                    var postData = {
+                        pin: ver_pin,
+                        email: email
+                    };
+
+                    if ($.trim(ver_pin).length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: SITE_URL+"verify.php",
+                            data: JSON.stringify(postData),
+                            crossDomain: true,
+                            cache: false,
+                            contentType:"application/json",
+                            dataType:"JSON", 
+
+                            beforeSend: function() {
+                                $("#verbtn").html('Verifying <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                            },
+                            success: function(response) {
+                                document.getElementById("emailcode").readOnly = false;
+                                document.getElementById("verbtn").disabled = false;
+                                $("#verbtn").html('Verify');
+
+                                if(response.length > 0){
+                                    
+                                    data = response [0].status;
+    
+                                    if (data == "success") {
+                                        $("#resicon").html("<i class='bi bi-patch-check-fill text-success'></i>");
+                                        $("#restitle").html("Email verified");
+                                        $("#resbody").html("The email address has been verified. Complete the registration process.");
+                                        $("#resfooter").html("<div class='btn-inline'><a href='register2.html?email="+email+"' class='btn btn-text-primary'>Complete registration</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                        
+                                    
+                                    }else if(data == "error"){
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Incorrect code");
+                                        $("#resbody").html("The email verification code entered is incorrect. Reconfirm the code sent to your email.");
+                                        $("#resfooter").html("<div class='btn-inline'><a  class='btn btn-text-secondary' data-bs-dismiss='modal'>Ok</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                        
+                                        
+                                    }else if(data == "notfound"){
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Email address invalid");
+                                        $("#resbody").html("This email address is invalid. Register the email address.");
+                                        $("#resfooter").html("<div class='btn-inline'><a href='register.html' class='btn btn-text-primary'>Start registration</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                        
+                                    }else {
+                                        
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Connection Error");
+                                        $("#resbody").html("An error occured. Please try again");
+                                        $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+
+                                    }
+                                }else {
+                        
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server Error");
+                                    $("#resbody").html("Couldn't process data. Please try again");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }
+
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown){
+                                document.getElementById("emailcode").readOnly = false;
+                                document.getElementById("verbtn").disabled = false;
+                                $("#verbtn").html('Verify');
+
+                                if (textStatus === 'timeout'){
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Bad network connection");
+                                    $("#resbody").html("Connection seems poor or offline");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a> <a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }else{
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server connection");
+                                    $("#resbody").html("Error in connection to server");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }
+                            }
+                        });
+                    } else {
+                        document.getElementById("email_error").innerHTML = "Please enter a valid verification pin";
+                        input_verpin.classList.add("border-danger");
+
+                        document.getElementById("emailcode").readOnly = false;
+                        document.getElementById("verbtn").disabled = false;
+                        $("#verbtn").html('Verify');
+                    }
+                        //return false;
+                }
+
+
+                
+
+            });
+        });
+        function emailCheck(){
+                var email = params.get('email');
+
+                var postData = {
+                    email: email,
+                    type: "register"
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: SITE_URL+"sendverification.php",
+                    data: JSON.stringify(postData),
+                    crossDomain: true,
+                    cache: false,
+                    contentType:"application/json",
+                    dataType:"JSON", 
+
+                    beforeSend: function() {
+                        
+                        $("#resicon").html("<span class='spinner-grow spinner-grow-sm m-1' role='status' aria-hidden='true'></span>");
+                            $("#restitle").html("Status");
+                            $("#resbody").html("Checking email status");
+                            $("#resfooter").html("");
+                            myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                            myModal2.show();
+
+                    },
+                    success: function(response) {
+
+                        if (response.length > 0){  
+                            data = response[0].status;      
+                            if (data == "notverified") {
+
+                                $("#resicon").html("<i class='bi bi-patch-check-fill text-success'></i>");
+                                $("#restitle").html("Verification sent");
+                                $("#resbody").html("A 4 digit verification code has been sent to your email address. Enter the code to confirm your email address");
+                                $("#resfooter").html("<div class='btn-inline'><a  class='btn btn-text-primary' data-bs-dismiss='modal'>Okay</a></div>");
+                
+                            }else if(data == "profileincomplete"){
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Email already verified");
+                                $("#resbody").html("This email address has already been confirmed. Proceed to complete your registration.");
+                                $("#resfooter").html("<div class='btn-inline'><a href='register2.html?email="+email+"' class='btn btn-text-primary'>Complete registration</a></div>");
+                            
+                                
+                            }else if(data == "verified"){
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("User already verified");
+                                $("#resbody").html("The email address has been verified and registration has been completed. Login to your account.");
+                                $("#resfooter").html("<div class='btn-inline'><a href='login.html' class='btn btn-text-primary'>Login</a></div>");
+                            // var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                            // myModal2.show();
+                                
+                            }else if(data == "notfound"){
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Email address invalid");
+                                $("#resbody").html("This email address is invalid. Register the email address.");
+                                $("#resfooter").html("<div class='btn-inline'><a href='register.html' class='btn btn-text-primary'>Start registration</a></div>");
+                                //var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                //myModal2.show();
+                                
+                            }else {
+                                
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Connection Error");
+                                $("#resbody").html("An error occured. Please try again");
+                                $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                //var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                //myModal2.show();
+
+                            }
+                        }else {
+                            
+                            $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                            $("#restitle").html("Server Error");
+                            $("#resbody").html("Couldn't process data. Please try again");
+                            $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+    
+                        }
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown){
+                        if (textStatus === 'timeout'){
+                            $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                            $("#restitle").html("Bad network connection");
+                            $("#resbody").html("Connection seems poor or offline");
+                            $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                            var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                            myModal2.show();
+                        }else{
+                            $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                            $("#restitle").html("Server connection");
+                            $("#resbody").html("Error in connection to server");
+                            $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                            var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                            myModal2.show();
+                        }
+                    }
+                });
+            }
+
+            /* global PullToRefresh */
+            PullToRefresh.init({
+                mainElement: '#appHead',
+                onRefresh: function() { location.reload(); }
+            });
+    </script>
+</body>
+
+</html>

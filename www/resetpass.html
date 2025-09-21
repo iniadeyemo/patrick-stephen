@@ -1,0 +1,422 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Reset Password</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+        <!-- App Header -->
+        <div class="appHeader no-border transparent position-absolute" id="appHead">
+            <div class="left">
+            </div>
+            <div class="pageTitle"></div>
+            <div class="right">
+            </div>
+        </div>
+        <!-- * App Header -->
+
+        <!-- App Capsule -->
+        <div id="appCapsule">
+
+            <div class="section mt-5">
+       
+                <h1 class="mb-2 ">Reset Password</h1>
+                <h4 class="section_caption fw-light">Input the code sent to your email address (<span id="emailTxt" class="fw-bold"></span>) and your new password</h4>
+            </div>
+
+            <div class="section mb-5" style="padding: 0;">
+
+                <div class="card shadow-none" >
+                    <div class="card-body pb-1">
+
+                        <div class="form-group boxed ">
+                            <label>Enter code</label>
+                            <div class="input-wrapper">
+                                <input type="number" class="form-control verification-input w-100" id="emailcode" placeholder="••••"
+                                    maxlength="4" style="width: 100% !important;">
+                                <div class="input-info text-danger px-3 fw-bold" id="email_error"></div>
+                            </div>    
+                        </div>
+
+                        <h3 class="mt-3">Set New Password</h3>
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control custom_input pt-4 pb-4" id="password" placeholder="Password" oninput="chkpass()">
+                            </div>
+                            <div class="input-info  px-3 pb-0">
+                                <ul>
+                                    <li class="text-secondary" id="upper_error">Must contain one uppercase </li>
+                                    <li class="text-secondary" id="lower_error">Must contain one lowercase</li>
+                                    <li  class ="text-secondary" id="number_error">Must contain number</li>
+                                    <li  class ="text-secondary" id="char_error">Must contain at least six (6) characters</li>
+                                </ul>
+                            </div>
+                            <div class="input-info text-danger px-3" id="password_error"></div>
+                            
+                        </div>
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                <input type="password" class="form-control custom_input pt-4 pb-4" id="confirmpassword" placeholder="Confirm Password" oninput="chkpass()">
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold" id="cpassword_error"></div>
+                        </div>
+
+                        
+                    </div>
+                </div>
+
+
+                <div class="form-group p-2 transparent">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="resetBtn">Reset password</button>
+                </div>
+
+                <div class="m-2 mt-4 text-center">
+                    <div class="text-center">Didn't receive code? <a href="forgot-password.html" class="text-primary text-bold">Request for code</a></div>
+                    <div class="text-center">Remember Password? <a href="login.html" class="text-primary text-bold">Login</a></div>
+                </div>
+                
+            </div>
+
+        </div>
+        <!-- * App Capsule -->
+
+
+        <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content border">
+                    <div class="modal-icon" id='resicon'>
+                       
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id='restitle'></h5>
+                    </div>
+                    <div class="modal-body" id = "resbody">
+                        
+                    </div>
+                    <div class="modal-footer " id="resfooter">
+                        <div class="btn-inline">
+                            <a  class="btn btn-secondary" data-bs-dismiss="modal">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    
+    <!-- ====== JS Files ======  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+
+    <script type="text/javascript">
+        user = sessionStorage.getItem('user');
+        
+        if (user !== null) {
+            window.location = "home.html";
+        }
+
+        function chkpass(){
+            var reg_password = $("#password").val();
+            var reg_cpassword = $("#confirmpassword").val();
+            
+            i_pass2 = document.getElementById("confirmpassword");
+            i_pass1 = document.getElementById("password");
+            char_error = document.getElementById("char_error");
+            lower_error = document.getElementById("lower_error");
+            upper_error = document.getElementById("upper_error");
+            number_error = document.getElementById("number_error");
+            var err = 1;
+
+            if (reg_password !== reg_cpassword){
+                
+                i_pass2.classList.add("border-danger");
+
+            }else{
+                i_pass2.classList.remove("border-danger");
+               
+                i_pass2.classList.add("border-success");
+            }
+
+            if ($.trim(reg_password).length < 6){
+                err = 1;
+               
+                char_error.classList.remove("text-secondary");
+                char_error.classList.add("text-danger");
+
+            }else{
+                err = 0;
+                
+                char_error.classList.remove("text-danger");
+                char_error.classList.add("text-success");
+            }
+
+            if(!/[a-z]/.test(reg_password) ){
+                err = 1;
+                
+               lower_error.classList.remove("text-secondary");
+                lower_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                lower_error.classList.remove("text-danger");
+                lower_error.classList.add("text-success");
+            }
+         
+            if(!/[A-Z]/.test(reg_password) ){
+                err = 1;
+                
+               upper_error.classList.remove("text-secondary");
+                upper_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                upper_error.classList.remove("text-danger");
+                upper_error.classList.add("text-success");
+            }
+
+            if(!/[0-9]/.test(reg_password) ){
+                err = 1;
+                
+               number_error.classList.remove("text-secondary");
+               number_error.classList.add("text-danger");
+            }else{
+                err = 0;
+                number_error.classList.remove("text-danger");
+                number_error.classList.add("text-success");
+            }
+
+            if (err === 1){
+                i_pass1.classList.add("border-danger");
+            }else if (err === 0){
+                i_pass1.classList.remove("border-danger");
+                i_pass1.classList.add("border-success");
+            }
+        }
+
+        $(document).ready(function() {
+
+            email = params.get('email');
+            document.getElementById("emailTxt").innerHTML = email;
+
+            $("#resetBtn").click(function() {
+
+                email = params.get('email');
+
+                var ver_pin = $("#emailcode").val();
+                var reg_password = $("#password").val();
+                var reg_cpassword = $("#confirmpassword").val();
+
+                
+                document.getElementById("email_error").innerHTML = "";
+                document.getElementById("password_error").innerHTML = "";
+                document.getElementById("cpassword_error").innerHTML = "";
+
+                input_verpin = document.getElementById("emailcode");
+                input_verpin.classList.remove("border-danger");
+                var in_password = document.getElementById("password");
+                in_password.classList.remove("border-danger");
+                var in_cpassword = document.getElementById("confirmpassword");
+                in_cpassword.classList.remove("border-danger");
+
+                
+                document.getElementById("resetBtn").disabled = true;
+
+                $("#resetBtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                if (ver_pin == ""){
+
+                    document.getElementById("email_error").innerHTML = "Please enter a valid verification pin";
+                    input_verpin.classList.add("border-danger");
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+                                    
+                }else if(reg_password == ""){
+                    in_password.classList.add("border-danger");
+                    document.getElementById("password_error").innerHTML = "Please enter a valid password";
+                    window.location = "#password";
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+
+                }else if(reg_cpassword == ""){
+                    in_cpassword.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("cpassword_error").innerHTML = "Please confirm password";
+                    window.location = "#confirmpassword";
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+
+                }else if ($.trim(reg_password).length < 6){
+                    in_password.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("password_error").innerHTML = "Password has to be at least six (6) characters";
+                    window.location = "#password";
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+
+                }else if(!/[a-z]/.test(reg_password) || !/[A-Z]/.test(reg_password) || !/[0-9]/.test(reg_password)) {
+                    in_password.classList.add("border-danger");
+                    window.location = "#password";
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+                    
+                }else if(reg_password !== reg_cpassword){
+                    in_password.classList.add("border-danger");
+                    in_cpassword.classList.add("border-danger");
+                    document.getElementById("cpassword_error").innerHTML = "Password don't match";
+                    window.location = "#confirmpassword";
+
+                    document.getElementById("resetBtn").disabled = false;
+                $("#resetBtn").html('Reset password');
+                }else{
+                    var postData = {
+                        pin: ver_pin,
+                        email: email,
+                        newpass: reg_password
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: SITE_URL+"resetPass.php",
+                        data: JSON.stringify(postData),
+                        crossDomain: true,
+                        cache: false,
+                        contentType:"application/json",
+                        dataType:"JSON", 
+
+                        beforeSend: function() {
+                            $("#resetBtn").html('Connecting <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+                        },
+                        success: function(response) {
+                            document.getElementById("resetBtn").disabled = false;
+                            $("#resetBtn").html('Reset password');
+
+                            if(response.length > 0){
+                                data = response[0].status;
+                                
+                                if (data == "success") {
+                                    $("#resicon").html("<i class='bi bi-patch-check-fill text-success'></i>");
+                                    $("#restitle").html("Successful!");
+                                        $("#resbody").html("Password reset successful");
+                                        $("#resfooter").html("<div class='btn-inline'><a class='btn btn-text-primary' href='login.html'>Login</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                
+                                }else if(data == "wrong"){
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Incorrect code");
+                                        $("#resbody").html("The email verification code entered is incorrect. Reconfirm the code sent to your email.");
+                                        $("#resfooter").html("<div class='btn-inline'><a  class='btn btn-text-secondary' data-bs-dismiss='modal'>Ok</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+
+                                    input_verpin.classList.add("border-danger");
+                                    
+                                    
+                                }else if(data == "same"){
+                                    $("#resicon").html("<i class='bi bi-patch-question-fill text-warning'></i>");
+                                    $("#restitle").html("Same Password");
+                                        $("#resbody").html("Your new password and old password are the same! You can login with your old password.");
+                                        $("#resfooter").html("<div class='btn-inline'><a class='btn btn-text-primary' href='login.html'>Login</a><a class='btn btn-text-secondary' data-bs-dismiss='modal'>Ok</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+
+                                    
+                                } else {
+                                    
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Connection Error");
+                                    $("#resbody").html("An error occured. Please try again");
+                                    $("#resfooter").html("<div class='btn-inline'><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+
+                                }
+                            }else{
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Server Error");
+                                $("#resbody").html("Couldn't process data. Please try again");
+                                $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                myModal2.show();
+
+                            }
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
+
+                            document.getElementById("resetBtn").disabled = false;
+                            $("#resetBtn").html('Reset password');
+
+                            if (textStatus == 'timeout'){
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Bad network connection");
+                                $("#resbody").html("Connection seems poor or offline");
+                                $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a> <a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                myModal2.show();
+                            }else{
+                                $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                $("#restitle").html("Server connection");
+                                $("#resbody").html("Error in connection to server");
+                                $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                myModal2.show();
+                            }
+                        }
+                    });
+                    
+                }
+
+                
+
+            });
+                
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appHead',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+</body>
+
+</html>

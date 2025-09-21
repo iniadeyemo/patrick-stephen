@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Blog</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+<!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+  <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader appHeaderMP bg-primary-grad p-3">
+        <div class="inAppHeader row pt-2">
+            <div class="col-9">
+
+                <h2 class="text-white d-flex justify-content-start align-items-center"><i class="bi bi-newspaper me-1"></i>  Blog</h2>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <a href="notification.html" class="position-relative fs-2">
+                    <i class='bi bi-bell text-white'></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge badge-danger d-none notif-count"></span>
+                </a>
+            </div>
+        </div>
+        
+
+        <div class="appHeaderCaption fw-light">
+            A Space for Reflection: Discover our blog
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="full-height">
+
+        <div class="section tab-content" style="position: relative !important;">
+            <div id="pgErr"></div>
+            <div class="section-title">Page <span id="curPage" class="text-primary">1</span></div>
+            
+            <div class="transactions" id="data-container">
+            </div>
+        </div>
+
+        <div class="section text-center" id="pagination-container">
+        </div>
+    </div>
+    <!-- * App Capsule -->
+
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item">
+            <div class="col">
+                <i class='bi bi-house-door'></i>
+                <strong>Home</strong>
+            </div>
+        </a>
+        <a href="forum.html" class="item">
+            <div class="col">
+                <i class='bi bi-people'></i>
+                <strong>Discussions</strong>
+            </div>
+        </a>
+        <a href="stories.html" class="item">
+            <div class="col">
+                <i class='bi bi-trophy'></i>
+                <strong>Stories</strong>
+            </div>
+        </a>
+        <a href="blog.html" class="item active">
+            <div class="col">
+                <i class='bi bi-newspaper'></i>
+                <strong>Blog</strong>
+            </div>
+        </a>
+        <a href="profile.html" class="item">
+            <div class="col">
+                <i class='bi bi-person'></i>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <div id="toastPopup" class="toast-box toast-bottom">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+        $(document).ready(function() {
+            function loadBlog (page){
+                $.ajax({
+                    type: "GET",
+                    url: SITE_URL+`ws.php?page=${page}&blog=`, 
+                    dataType:"JSON",
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function () { 
+                        document.getElementById("data-container").innerHTML = "Loading...";
+                    },
+                    success: function (response) {
+                        
+                        if (response.length > 0){
+                            curPage = response[0].page;
+                            document.getElementById("curPage").innerHTML = curPage;
+                        
+                            $('#data-container').empty();
+                            
+                            $.each(response[0].blog, function(index, item) {
+                                // Example: Display data in a table or list
+                                blogd = `${item.blog_date}`;
+                                if (blogd == "New"){
+                                    dateSty = "fw-bold text-primary"
+                                    displayBD = `<i class='bi bi-record-circle me-1'></i> New Article`
+                                }else{
+                                    dateSty = ""
+                                    displayBD = blogd
+                                }
+                                
+                                blogHead = 
+                                `<a href='blog-post.html?id=${item.blog_id}' class="item">
+                                    <div class="detail">
+                                        <img src="${SITE_URL_NORM}${item.blog_image}" alt="${item.blog_title}" class="w-25 rounded me-2">
+                                        <div>
+                                            <strong>${item.blog_title}</strong>
+                                            <p class='${dateSty}'>${displayBD}</p>
+                                        </div>
+                                    </div>
+                                </a>`;
+
+                                $('#data-container').append(blogHead); //adapt to your table structure.
+
+                            });
+
+
+                            // Generate pagination links
+                            $('#pagination-container').empty();
+                            for (var i = 1; i <= response[0].total_pages; i++) {
+                                if (i == response[0].page) {
+                                     // Current page
+                                    link = `<a href="#" class="btn m-1 btn-primary"> ${i} </a>`;
+                                }else{
+                                    link = `<a href="#" class="page-link btn m-1 btn-outline-primary" data-page="${i}"> ${i} </a>`;
+                                }
+                                
+                                
+                                $('#pagination-container').append(link);
+                            }
+
+                            // Attach click event to pagination links
+                            $('.page-link').click(function(e) {
+                                e.preventDefault();
+                                var page = $(this).data('page');
+                                loadBlog(page);
+                            });
+                        }else{
+                            
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        document.getElementById("curPage").innerHTML = "[null]";
+                        document.getElementById("data-container").innerHTML = ""
+                        document.getElementById("pgErr").innerHTML = 
+                        `<p class="alert alert-danger" role="alert">
+                            A server error occured while generating blog articles. Please try again
+                        </p>`;
+                    }
+                }); 
+            }
+
+            loadBlog (1);
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+</body>
+
+</html>

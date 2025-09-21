@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Forum</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+  <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader appHeaderMP bg-primary-grad p-3">
+        <div class="inAppHeader row pt-2">
+            <div class="col-9">
+
+                <h2 class="text-white d-flex justify-content-start align-items-center"><i class="bi bi-people me-1"></i>  Discussions</h2>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <a href="notification.html" class="position-relative fs-2">
+                    <i class='bi bi-bell text-white'></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge badge-danger d-none notif-count"></span>
+                </a>
+            </div>
+        </div>
+        
+
+        <div class="appHeaderCaption fw-light">
+            Community Conversations: Share, learn, and support.
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+        <div class="section">
+            <ul class="nav nav-tabs capsuled" role="tablist">
+                <li class="nav-item">
+                    <a class="nav-link active" data-bs-toggle="tab" href="#myDis" id="myDisToggle" role="tab">
+                        My discussions (<span id="my_CNt">0</span>)
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" data-bs-toggle="tab" href="#trendDis" id="trendDisToggle" role="tab">
+                        <div class="d-flex justify-content-start align-items-center"><i class="bi bi-fire text-danger me-1"></i> Trending (<span id="tr_CNt">0</span>)</div>
+                    </a>
+                </li>
+                
+            </ul>
+            <div class="tab-content mt-1">
+                <div class="tab-pane fade show active" id="myDis" role="tabpanel">
+                    <ul class="listview simple-listview border-0" id="userforumCont">
+                
+                    </ul>
+                </div>
+                <div class="tab-pane fade" id="trendDis" role="tabpanel">
+                    <ul class="listview simple-listview border-0" id="forumCont">
+                
+                    </ul>
+                </div>
+                
+            </div>
+                
+        </div>
+
+        
+        <button class="btn btn-primary btn-icon btn-lg rounded-circle fab" data-bs-toggle="modal" data-bs-target="#NewDialog">
+            <i class="bi bi-plus-lg"></i>
+        </button>
+
+    </div>
+    <!-- * App Capsule -->
+
+
+    <!--  New Discussion -->
+    <div class="modal fade dialogbox" id="NewDialog" 
+        data-bs-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">New Discussion</h5>
+                    <button class="btn-close ms-2" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-start mb-2">
+                    <div id="CreErr"></div>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="disTitle">Discussion Title</label>
+                            <textarea id="disTitle" rows="3" class="form-control"
+                                placeholder="Max of 100 characters" maxlength="100"></textarea>
+                            <i class="clear-input">
+                                <i class='bi bi-x-circle-fill text-danger'></i>
+                            </i>
+                        </div>
+                        <div class="input-info text-danger" id="titleErr"></div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="disContext">Add Context</label>
+                            <textarea id="disContext" rows="4" class="form-control"
+                                placeholder="Max of 1,000 characters" maxlength="1000"></textarea>
+                            <i class="clear-input">
+                                <i class='bi bi-x-circle-fill text-danger'></i>
+                            </i>
+                        </div>
+                        <div class="input-info text-danger" id="contextErr"></div>
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <div class="btn-inline">
+                        <button  class="btn btn-text-primary" id="createBtn" onclick="addDiscussion()">Create</button>
+                        <a  class="btn btn-text-danger" data-bs-dismiss="modal">Dismiss</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * New Discussion -->
+
+
+    <div id="toastPopup" class="toast-box toast-bottom">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item">
+            <div class="col">
+                <i class='bi bi-house-door'></i>
+                <strong>Home</strong>
+            </div>
+        </a>
+        <a href="forum.html" class="item active">
+            <div class="col">
+                <i class="bi bi-people-fill"></i>
+                <strong>Discussions</strong>
+            </div>
+        </a>
+
+        <a href="stories.html" class="item">
+            <div class="col">
+                <i class='bi bi-trophy'></i>
+                <strong>Stories</strong>
+            </div>
+        </a>
+
+        <a href="blog.html" class="item">
+            <div class="col">
+                <i class='bi bi-newspaper'></i>
+                <strong>Blog</strong>
+            </div>
+        </a>
+        <a href="profile.html" class="item">
+            <div class="col">
+                <i class='bi bi-person'></i>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+
+        disTitle = document.getElementById("disTitle");
+        disTitlemaxLength = disTitle.maxLength;
+
+        disTitle.addEventListener("input", function () {
+            if (this.value.length >= disTitlemaxLength) {
+                this.value = this.value.substring(0, disTitlemaxLength);
+                document.getElementById("titleErr").innerHTML = `Title has reached character limit (${disTitlemaxLength} char)`
+                
+            }else{
+                document.getElementById("titleErr").innerHTML = ``
+            }
+            
+        });
+
+        disContext = document.getElementById("disContext");
+        disContextmaxLength = disContext.maxLength;
+
+        disContext.addEventListener("input", function () {
+            if (this.value.length >= disContextmaxLength) {
+                this.value = this.value.substring(0, disContextmaxLength);
+                document.getElementById("contextErr").innerHTML = `Context has reached character limit (${disContextmaxLength} char)`
+                
+            }else{
+                document.getElementById("contextErr").innerHTML = ``
+            }
+            
+        });
+
+        function addDiscussion(){
+            document.getElementById("createBtn").disabled = true;
+            document.getElementById("createBtn").innerHTML = "Validating...";
+
+            let disTitle = document.getElementById("disTitle").value;
+            let disContext = document.getElementById("disContext").value;
+            
+            const retrievedUserString = sessionStorage.getItem("user");
+            if (retrievedUserString) {
+                disUser = retrievedUser.id;
+
+                trimmeddisTitle = disTitle.trim();
+                trimmeddisContext = disContext.trim();
+
+                if (trimmeddisTitle == ""){
+                    document.getElementById("CreErr").innerHTML = `<p class='alert alert-danger alert-dismissible fade show' role="alert">Title can't be empty <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                    document.getElementById("createBtn").disabled = false;
+                    document.getElementById("createBtn").innerHTML = "Create";
+                }else if(trimmeddisContext == ""){
+
+                    document.getElementById("CreErr").innerHTML = `<p class='alert alert-danger alert-dismissible fade show' role="alert">Context can't be empty <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                    document.getElementById("createBtn").disabled = false;
+                    document.getElementById("createBtn").innerHTML = "Create";
+                    
+                }else{
+                    var postData = {
+                        title: trimmeddisTitle,
+                        context: trimmeddisContext,
+                        user: disUser
+                    };
+                    
+                    $.ajax({
+                        type: "POST",
+                        url: SITE_URL+"adddiscussion.php",
+                        data: JSON.stringify(postData),
+                        crossDomain: true,
+                        cache: false,
+                        contentType:"application/json",
+                        dataType:"JSON", 
+
+                        beforeSend: function() {
+                            document.getElementById("createBtn").innerHTML = "Creating...";
+                            
+                        },
+                        success: function(response) {
+                            document.getElementById("createBtn").innerHTML = "Create";
+                            document.getElementById("createBtn").disabled = false;
+
+                            if (response.length > 0){
+                                data = response[0].status;
+                                if (data == "success") {
+                                    document.getElementById("disTitle").value = "";
+                                    document.getElementById("disContext").value = "";
+                                    document.getElementById("CreErr").innerHTML = `<p class='alert alert-success alert-dismissible fade show' role="alert">Discussion successfully created and pending approval from admin <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                                    getMyDis (disUser);
+                                    
+                                }else {
+                                    
+                                    
+                                    document.getElementById("CreErr").innerHTML = `<p class='alert alert-danger alert-dismissible fade show' role="alert">There was a server error. Retry <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                                
+
+                                }
+                            }else{
+                                document.getElementById("CreErr").innerHTML = `<p class='alert alert-danger alert-dismissible fade show' role="alert">There was a server error. Retry <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                            }
+
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
+                            document.getElementById("CreErr").innerHTML = `<p class='alert alert-danger alert-dismissible fade show' role="alert">There was a server error. Retry <button type='button' class='btn-close' data-bs-dismiss='alert' aria-label='Close'></button></p>`
+                            document.getElementById("createBtn").innerHTML = "Create";
+                            document.getElementById("createBtn").disabled = false;
+                        }
+                    });
+
+                }
+            }
+
+        }
+
+        function getMyDis (userId){
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?userForum=${userId}&userF=${userId}&getForum=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                    document.getElementById("userforumCont").innerHTML = "<div class='py-3 px-2'>Loading your discussions...</div>";
+                },
+                success: function (response) {
+                    document.getElementById("my_CNt").innerHTML = response.length;
+                    if (response.length > 0){
+                        $('#userforumCont').empty();
+                        
+                        for(var i = 0; i < response.length; i++){
+
+                            discussion_id = response[i].discussion_id;
+                            discussion_title = response[i].discussion_title;
+                            discussion_status = response[i].discussion_status;
+                            
+                            total_users = response[i].total_users;
+                            total_comments = response[i].total_comments;
+                            latest_comment = response[i].latest_comment;
+                            discussion_user_id = response[i].discussion_user_id;
+                            discussion_user_name = response[i].discussion_user_name;
+                            discussion_user_avatar = response[i].discussion_user_avatar;
+                            
+                            if (discussion_user_id == "0"){
+                                user_avatar = ``
+                            }else{
+                                user_avatar = `<img src="${SITE_URL_NORM}${discussion_user_avatar}" alt="avatar" width='16' class="rounded ms-1">`
+                            }
+                            
+                            if(discussion_user_id == userId){
+                                discussion_user_name = `${user_avatar} `+`You`
+                            }else{
+                                discussion_user_name =`${user_avatar} `+getFirstWord(discussion_user_name);
+                            }
+                            
+
+                            if (latest_comment == "New"){
+                                lc = `<span class='text-small me-2 d-flex justify-content-start align-items-center fw-bold text-primary'><i class='bi bi-record-circle me-1'></i> New comment </span>`
+                                
+                            }else{
+                                lc = ``
+                            }
+
+                            if(discussion_status == "1"){
+                                //active
+                                status_bg = ``
+                                status_txt = ``
+                                trash_bin = ``
+                            }else if(discussion_status == "2"){
+                                //pending
+                                status_bg = `bg-light-warning`
+                                status_txt = `<span class='badge bg-warning'>Pending</span>`
+                                trash_bin = `<span class="text-small me-2 d-flex justify-content-start align-items-center text-danger" onclick="deleteDisussion('${discussion_id}')"><i class='bi bi-trash3-fill me-1'></i> Delete</span>`
+                            }else if(discussion_status == "3"){
+                                //rejected
+                                status_bg = `bg-light-danger`
+                                status_txt = `<span class='badge bg-danger'>Rejected</span>`
+                                trash_bin = ``
+                            }
+                            
+                            forumHead =
+                            `<li class="d-block border-bottom py-3 ${status_bg}">
+                                <a href='forum-page.html?id=${discussion_id}'>
+                                    <h4>${discussion_title}</h4>
+                                    <div class="text-capitalize mb-1">Created by ${discussion_user_name}</div>
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-people-fill me-1'></i> ${total_users}</span>
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-chat-text me-1'></i> ${total_comments}</span>
+                                        ${lc}
+                                        ${status_txt}
+                                    </div>
+                                </a>
+                            </li>`
+                            $('#userforumCont').append(forumHead);
+                        }                        
+                    
+                    }else{
+                        document.getElementById("userforumCont").classList.add("border-0");
+                        document.getElementById("userforumCont").innerHTML = `<div class="fw-light lead">
+                            You're not part of an active conversation at the moment.
+                            You can find interesting discussions in the trending and active lists, or you can create one yourself!
+                        </div>`;
+                        
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    document.getElementById("userforumCont").classList.add("border-0");
+                    document.getElementById("userforumCont").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while generating your active discussions. Please try again
+                    </p>`;
+                }
+            }); 
+        }
+
+
+      
+        $(document).ready(function() {
+
+            tab = getParameterByName("tab");
+            if(tab){
+                if (tab == "t"){
+                    document.getElementById("trendDisToggle").click();
+                    
+                }
+            }else{
+                
+            }
+
+            const retrievedUserString = sessionStorage.getItem("user");
+
+            if (retrievedUserString) {
+                userId = retrievedUser.id;
+
+                getMyDis (userId);
+                
+                
+            }else{
+                document.getElementById("userforumCont").classList.add("border-0");
+                document.getElementById("userforumCont").innerHTML = 
+                `<p class="alert alert-danger" role="alert">
+                    A temporary error occurred. Please log out and log back in to continue
+                </p>`; 
+            }
+
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?userF=${userId}&getForum=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                    document.getElementById("forumCont").innerHTML = "<div class='py-3 px-2'>Loading discussions...</div>";
+                },
+                success: function (response) {
+                    document.getElementById("tr_CNt").innerHTML = response.length;
+                    if (response.length > 0){
+                        $('#forumCont').empty();
+                        
+                        for(var i = 0; i < response.length; i++){
+
+                            discussion_id = response[i].discussion_id;
+                            discussion_title = response[i].discussion_title;
+                            total_users = response[i].total_users;
+                            total_comments = response[i].total_comments;
+                            discussion_user_id = response[i].discussion_user_id;
+                            discussion_user_name = response[i].discussion_user_name;
+                            discussion_user_avatar = response[i].discussion_user_avatar;
+                            
+                            if (discussion_user_id == "0"){
+                                user_avatar = ``
+                            }else{
+                                user_avatar = `<img src="${SITE_URL_NORM}${discussion_user_avatar}" alt="avatar" width='16' class="rounded ms-1">`
+                            }
+                            
+                            if(discussion_user_id == userId){
+                                discussion_user_name = `${user_avatar} `+`You`
+                            }else{
+                                discussion_user_name =`${user_avatar} `+getFirstWord(discussion_user_name);
+                            }
+                            
+                            forumHead =
+                            `<li class="d-block border-bottom py-3">
+                                <a href='forum-page.html?id=${discussion_id}'>
+                                    <h4>${discussion_title}</h4>
+                                    <div class="text-capitalize mb-1">Created by ${discussion_user_name}</div>
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-people-fill me-1'></i> ${total_users}</span>
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-chat-text me-1'></i> ${total_comments}</span>
+                                    </div>
+                                </a>
+                            </li>`
+                            $('#forumCont').append(forumHead);
+                        }                        
+                    
+                    }else{
+                        document.getElementById("forumCont").innerHTML = "<div class='py-3 px-2'>No trending discussions!<div>";
+                        
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    
+                    document.getElementById("forumCont").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while generating active discussions. Please try again
+                    </p>`;
+                }
+            }); 
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

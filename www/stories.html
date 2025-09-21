@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Stories</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+  <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader appHeaderMP bg-primary-grad p-3 mb-0">
+        <div class="inAppHeader row pt-2">
+            <div class="col-9">
+
+                <h2 class="text-white d-flex justify-content-start align-items-center"></ion-icon><i class="bi bi-trophy me-1"></i>  Stories</h2>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <a href="notification.html" class="position-relative fs-2">
+                    <i class='bi bi-bell text-white'></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge badge-danger d-none notif-count"></span>
+                </a>
+            </div>
+        </div>
+        
+
+        <div class="appHeaderCaption fw-light">
+            Be inspired by others
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule" class="full-height mt-0 pt-0">
+        <div class="section full">
+            <video id="myVideo" class="w-100" height="250" controls style="object-fit: cover;">
+                <source src="" type="video/mp4">
+                Video can't be played
+            </video>
+
+            <div id="videoErr"></div>
+            <div class="text-center mt-2">
+                <u><a onclick="loadvideo()" class="fw-bold">Watch another video</a></u>
+            </div>
+        </div>
+
+        <div class="section mt-3">
+            <div class="section-heading">
+                <div class="section-title medium">Stories</div>
+                <a href="contact.html" class="link">Share yours</a>
+            </div>
+
+            <div class="masonry" id="data-container">
+                
+               
+            </div>       
+
+            <div id="loading" class="text-center mt-3">
+                <div class="spinner-grow text-primary text-small me-1" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div> 
+            </div>
+            
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+    <button id="hiddenTrigger" type="button" class="btn btn-primary d-none" data-bs-toggle="modal" data-bs-target="#storyModal"></button>
+    <!-- Modal Story -->
+    <div class="modal fade modalbox" id="storyModal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header bg-purple-6">
+                    <h5 class="modal-title" id="storyAuthor">[Name]</h5>
+                    <a href="#" data-bs-dismiss="modal">Close</a>
+                </div>
+                <div class="modal-body" id="storyContent">
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * Modal Story -->
+
+
+
+    <div id="toastPopup" class="toast-box toast-bottom">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item">
+            <div class="col">
+                <i class='bi bi-house-door'></i>
+                <strong>Home</strong>
+            </div>
+        </a>
+        <a href="forum.html" class="item">
+            <div class="col">
+                <i class='bi bi-people'></i>
+                <strong>Discussions</strong>
+            </div>
+        </a>
+
+        <a href="stories.html" class="item active">
+            <div class="col">
+                <i class="bi bi-trophy-fill"></i>
+                <strong>Stories</strong>
+            </div>
+        </a>
+
+        <a href="blog.html" class="item">
+            <div class="col">
+                <i class='bi bi-newspaper'></i>
+                <strong>Blog</strong>
+            </div>
+        </a>
+        <a href="profile.html" class="item">
+            <div class="col">
+                <i class='bi bi-person'></i>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+
+        function openModalWithStoryId(storyId) {
+            hiddenTrigger = document.getElementById('hiddenTrigger');
+            hiddenTrigger.setAttribute('data-bs-id', storyId);
+            hiddenTrigger.click(); // Simulate a click to trigger the modal
+         }
+
+        storyModal = document.getElementById('storyModal')
+        storyModal.addEventListener('show.bs.modal', event => {
+            // Button that triggered the modal
+            const button = event.relatedTarget
+            // Extract info from data-bs-* attributes
+            
+            storyId = button.getAttribute('data-bs-id')
+
+            document.getElementById("storyContent").innerHTML = "Loading...";
+
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                
+                response = JSON.parse(this.responseText);
+                if(response.length > 0){
+                    story_content = response[0].story_content;
+                    story_author = response[0].story_author;
+                    
+                    authorFName = getFirstWord(story_author);
+                    story_content = story_content.replace(/\[/g, "<");
+                    story_content = story_content.replace(/\]/g, ">");
+
+                    story_author = `${authorFName}'s story`
+                    document.getElementById("storyContent").innerHTML = story_content;
+                    document.getElementById("storyAuthor").innerHTML = story_author;
+                }else{
+                    document.getElementById("storyContent").innerHTML = `<p class="alert alert-danger">This story has been deleted. You can read another story</p>`;
+                }
+            }
+            };
+            xmlhttp.open("GET",SITE_URL+`ws.php?getstory=${storyId}`,true);
+            xmlhttp.send();
+        });
+
+        
+        function loadvideo(){
+            $.ajax({
+                    type: "GET",
+                    url: SITE_URL+`ws.php?video=`, 
+                    dataType:"JSON",
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function () { 
+                        
+                    },
+                    success: function (response) {
+                        
+                        if (response.length > 0){
+                            video_src = response[0].video_src;
+                            
+                            const videoElement = document.querySelector('#myVideo');
+                            // Change the src attribute
+                            videoElement.src = `${SITE_URL_NORM}${video_src}`;
+
+                            // Important: You might need to reload the video to apply the change
+                            videoElement.load();
+                            
+                        }else{
+                            document.getElementById("videoErr").innerHTML = 
+                            `<p class="alert alert-danger" role="alert">
+                                There's no video to load
+                            </p>`;    
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        
+                        document.getElementById("videoErr").innerHTML = 
+                        `<p class="alert alert-danger" role="alert">
+                            A server error occured while loading video. Please try again
+                        </p>`;
+                    }
+                }); 
+            
+        }
+      
+        
+        let offset = 0;
+        let limit = 8;
+        let total_record = 0;
+        let loading = false;
+
+
+        function getStories(){
+
+            if (loading) return;
+            loading = true;
+            $("#loading").show();
+
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?offset=${offset}&getstories=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                },
+                success: function (response) {
+                    
+                    if (response.length > 0){
+                        offset += limit;
+                        
+
+                        let bgClasses = [];
+                        for (i = 1 ; i <= 40 ; i++){
+                            bgClasses.push(i);
+                            
+                        }
+
+
+                        for (i = bgClasses.length ; i > 1 ; i--){
+                            j = Math.floor(Math.random() * (i + 1));
+                            [bgClasses[i], bgClasses[j]] = [bgClasses[j], bgClasses[i]];
+                        }
+
+
+                        for (var i = 0; i < response.length; i++){
+
+                            total_record  = response[i].total_record;
+                            story_id  = response[i].story_id;
+                            story_summary  = response[i].story_summary;
+                            story_author  = response[i].story_author;
+
+                            const bgClass = bgClasses[i % 40];
+                            
+                            storyHead =
+                            `<div class="masonry-item" data-bs-toggle="modal" data-bs-target="#storyModal"  data-bs-id="${story_id}" >
+                                <div class="card border-purple-${bgClass} shadow p-2 rounded txt-sm">
+                                    <div class="mb-1 fw-bold text-truncate">${story_author}</div>
+                                    <div class=" text-justify">
+                                        ${story_summary}...
+                                        <b><u>Continue reading</u></b>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                            $('#data-container').append(storyHead);
+                            
+                        }
+
+                    }else{
+                        //No stories
+                        $(window).off("scroll");
+                    
+                        if(total_record == 0){
+                            $('#data-container').append(`<div class="fw-light mt-3 text-center">
+                                No story to display
+                            </div>`);
+                        }
+                        
+
+                    }
+                },complete: function() {
+                    loading = false;
+                    $("#loading").hide();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+
+                    document.getElementById("data-container").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while loading stories. Please try again
+                    </p>`;
+                }
+            });
+
+            
+        }
+
+        $(document).ready(function() {
+            loadvideo();
+
+            const retrievedUserString = sessionStorage.getItem("user");
+            if (retrievedUserString) {
+                userId = retrievedUser.id;
+            }
+
+            openId = getParameterByName("openId");
+            if(openId){
+                openModalWithStoryId(openId);
+            }
+            getStories();
+
+              // Infinite scroll
+              $(window).scroll(function() {
+                if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                    getStories();
+                }
+            });
+
+            const video = document.getElementById('myVideo');
+            video.addEventListener('click', () => {
+                if (video.requestFullscreen) {
+                    video.requestFullscreen();
+                } else if (video.webkitRequestFullscreen) { // For older Safari
+                    video.webkitRequestFullscreen();
+                } else if (video.msRequestFullscreen) { // For older IE/Edge
+                    video.msRequestFullscreen();
+                }
+            });            
+            
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

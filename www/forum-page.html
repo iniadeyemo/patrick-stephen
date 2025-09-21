@@ -1,0 +1,1116 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Forum</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body class="bg-white">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary-grad text-light rounded-bottom">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <i class='bi bi-chevron-left'></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+            Discussion
+        </div>
+        <div class="right" id="headerRight">
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->  
+    <div id="appCapsule" class="full-height">
+        <div class="section full bg-light p-2 pt-5">
+            <div id="pgErr"></div>
+            <h2 id="forumTitle">
+                [DiscussionTitle]
+            </h2>
+
+            <div class="forum-header-info my-3 lh-sm text-capitalize">
+                Created:
+                <span id="forumUser">
+
+                </span>  
+                <span class="mx-1 text-primary">|</span>
+                <span id="forumDate">
+                    [DiscussionDate]
+                </span>
+            </div>
+            <div class="lead">
+                <span id="forumSummary">[DiscussionSummary]</span>
+                <a id="toggleButton" style="display: none;" class="fw-bold">See More</a>
+            </div>
+        </div>
+
+        <div class="section full">
+            <div class="section-title mb-2 bg-secondary sticky-section">Contribution (<span id="commentCount">NULL</span>)</div>
+
+            <div class="" id="forumComments">
+
+            </div>
+         
+
+            <!--<button id="loadMore" class="btn btn-primary w-100 mt-3">Load More</button>-->
+            <div id="loading" class="text-center mt-3">
+                <div class="spinner-grow text-primary text-small me-1" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div> 
+            </div>
+        </div>
+
+        <input type="hidden" value="0" id="replyId">
+    </div>
+    <!-- * App Capsule -->
+
+    <div id="toastPopup" class="toast-box toast-top">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+   
+    
+    <!-- App Bottom Menu -->
+    <div id="replyBox" class="d-none align-items-center bg-light shadow-sm text-small p-1 text-truncate w-100 position-fixed border-top" style="bottom:56px; ">
+        <span class="flex-grow-1 text-truncate" id="replyContent">[Reply]</span>
+        <button class="btn-close ms-2" aria-label="Close" onclick="hideReplyCont()"></button>
+    </div>
+    <div class="chatFooter">
+        <div class="form-group basic w-100">
+            <div class="input-wrapper">
+                <input type="text" class="form-control" id="contributeInput" placeholder="Contribute..." maxlength="500">
+                
+            </div>
+        </div>
+        <button type="button" class="btn btn-icon btn-primary" id="contributeBtn"  onclick="addComment()">
+            <i class='bi bi-send'></i>
+        </button>
+        
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content border">
+                <div class="modal-icon" id='resicon'>
+                   
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id='restitle'></h5>
+                </div>
+                <div class="modal-body" id = "resbody">
+
+                    
+                </div>
+                <div class="modal-footer" id="resfooter">
+                    <div class="btn-inline">
+                        <a  class="btn btn-secondary" data-bs-dismiss="modal">OK</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Comment Dialog -->
+    <div class="modal fade dialogbox" id="CommentDialog" 
+        data-bs-backdrop="static" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"></h5>
+                    <button class="btn-close ms-2" aria-label="Close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body text-start mb-2" id="commentPopupHead">
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- * Comment Dialog -->
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+        let offset = 0;
+        let limit = 15;
+        let total_record = 0;
+        let loading = false;
+        
+        contributeInput = document.getElementById("contributeInput");
+        contributeInputmaxLength = contributeInput.maxLength;
+
+        contributeInput.addEventListener("input", function () {
+            if (this.value.length >= contributeInputmaxLength) {
+                this.value = this.value.substring(0, contributeInputmaxLength);
+                document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Comment has reached character limit (${contributeInputmaxLength} char)`
+                document.getElementById("toastPopup").classList.remove("bg-success");
+                document.getElementById("toastPopup").classList.add("bg-danger");
+                document.getElementById("toastPopup").classList.remove("bg-info");
+                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                toast.show();
+            }
+            
+        });
+
+        function hideReplyCont(){
+            document.getElementById("contributeInput").placeholder = "Contribute...";
+            document.getElementById("replyId").value = "0";
+            
+            document.getElementById("replyBox").classList.add("d-none");
+            document.getElementById("replyBox").classList.remove("d-flex");
+            document.getElementById("replyContent").innerHTML = "";
+        }
+        
+        function popReply(commentId){
+            commentUser = document.getElementById(`commentUser${commentId}`).innerHTML;  
+            commentContent = document.getElementById(`commentContent${commentId}`).innerHTML; 
+            document.getElementById("contributeInput").placeholder = `Reply to ${commentUser}`;
+            document.getElementById("replyId").value = commentId;
+
+            
+            replyContent = `<b class="text-primary">${commentUser}</b> <span>${commentContent}</span>`;
+            document.getElementById("replyContent").innerHTML = replyContent;
+            
+            document.getElementById("replyBox").classList.remove("d-none");
+            document.getElementById("replyBox").classList.add("d-flex");
+        }
+
+        function addComment(){
+            reply = document.getElementById("replyId").value;
+            commentCont = document.getElementById("contributeInput").value;
+            //Get discussion and user
+            forumId = getParameterByName("id");
+            const retrievedUserString = sessionStorage.getItem("user");
+            if (retrievedUserString) {
+                commentUser = retrievedUser.id;
+            }
+
+            trimmedCC = commentCont.trim();
+            if (trimmedCC == ""){
+                document.getElementById("toastPopup").classList.add("bg-danger");
+                document.getElementById("toastPopup").classList.remove("bg-success");
+                document.getElementById("toastPopup").classList.remove("bg-info");
+
+                document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Comment can't be empty`
+                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                toast.show();
+            }else{
+                var postData = {
+                    reply: reply,
+                    comment: trimmedCC,
+                    user: commentUser,
+                    forum: forumId
+                };
+
+                $.ajax({
+                    type: "POST",
+                    url: SITE_URL+"addcoment.php",
+                    data: JSON.stringify(postData),
+                    crossDomain: true,
+                    cache: false,
+                    contentType:"application/json",
+                    dataType:"JSON", 
+
+                    beforeSend: function() {
+
+                    },
+                    success: function(response) {
+                        if (response.length > 0){
+                            data = response[0].status;
+                            if (data == "success") {
+                                document.getElementById("toastPopup").classList.add("bg-success");
+                                document.getElementById("toastPopup").classList.remove("bg-danger");
+                                document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                if(reply != "0"){
+                                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Reply posted`
+                                }else{
+                                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Comment posted`
+                                }
+                                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                toast.show();
+
+                                forumId = getParameterByName("id");
+                                const retrievedUserString = sessionStorage.getItem("user");
+
+                            if (retrievedUserString) {
+                                userId = retrievedUser.id;
+
+                                offset = 0;
+                                limit = 15;
+                                total_record = 0;
+                                loading = false;
+                                $('#forumComments').empty();
+                                
+                                getComments(userId, forumId);
+
+                            }
+                            
+                            }else {
+                                document.getElementById("toastPopup").classList.add("bg-danger");
+                                document.getElementById("toastPopup").classList.remove("bg-success");
+                                document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                toast.show();
+                            
+
+                            }
+                        }else{
+                            document.getElementById("toastPopup").classList.add("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                        }
+
+                    },
+                    error: function(XMLHttpRequest, textStatus, errorThrown){
+                        document.getElementById("toastPopup").classList.add("bg-danger");
+                        document.getElementById("toastPopup").classList.remove("bg-success");
+                        document.getElementById("toastPopup").classList.remove("bg-info");
+
+                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                        toast.show();
+                    }
+                });
+
+
+                hideReplyCont();
+                document.getElementById("contributeInput").value = "";
+            }
+        }
+
+
+        function getInView(id){
+            // Popup
+
+            var chkM = document.querySelector(".modal.show");
+            if(chkM){
+                
+                bsM = bootstrap.Modal.getInstance(chkM);
+                bsM.hide();
+
+            }
+            const retrievedUserString = sessionStorage.getItem("user");
+            if (retrievedUserString) {
+                user = retrievedUser.id;
+
+                $.ajax({
+                    type: "GET",
+                    url: SITE_URL+`ws.php?fc_user=${user}&forumComment=${id}`, 
+                    dataType:"JSON",
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function () { 
+                        $("commentPopupHead").html(`Loading comment...`);
+                    },
+                    success: function (responseC) {
+                        if (responseC.length > 0){
+                            comment_id = responseC[0].comment_id;
+                            comment_content = responseC[0].comment_content;
+                            comment_date = responseC[0].comment_date;
+                            comment_user = responseC[0].comment_user;
+                            comment_user_id = responseC[0].comment_user_id;
+                            parent_content = responseC[0].parent_content;
+                            parent = responseC[0].parent;
+                            og_parent = responseC[0].og_parent;
+                            parent_user = responseC[0].parent_user;
+                            parent_user_id = responseC[0].parent_user_id;
+                            likes = responseC[0].likes;
+                            dislikes = responseC[0].dislikes;
+                            user_reaction = responseC[0].user_reaction;
+                            avatar_link = responseC[0].avatar_link;
+                            
+                            trash_bin = ``
+                            avatar = `<img src="${SITE_URL_NORM}${avatar_link}" alt="avatar" width='17' class="rounded">`
+                            if (comment_user_id == user){
+                                comment_name_dis = "You";
+                                
+                            }else{
+                                comment_name_dis = comment_user;
+
+                            }
+
+                            if(user_reaction){
+                                if (user_reaction == "1"){
+                                    //You like
+                                    like_icon = `<i class='bi bi-hand-thumbs-up-fill text-danger me-1'></i>`;
+                                    dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                                }else{
+                                    //You dislike
+
+                                    like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                    dislike_icon = `<i class='bi bi-hand-thumbs-down-fill text-warning me-1'></i>`;
+                                }
+                            }else{
+                                //No reaction
+                                like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                            }
+                            comment_name_dis = getFirstWord(comment_name_dis);
+                            if (comment_date == "New"){
+                                comment_date = "New Comment";
+                                
+                                if (comment_user_id == user){
+                                    trash_bin = `<span class="txt-sm me-2 d-flex justify-content-start align-items-center text-danger" onclick="deleteComment('${comment_id}')" data-bs-dismiss="modal"><i class="bi bi-trash3-fill me-1"></i> Delete</span>`
+                                }
+                            }     
+                            
+                            if (parent == "0"){
+                                if(og_parent !== "0"){
+                                
+                                    reply = ` <span class='mx-1'>~</span> reply` 
+
+                                    parentHead = `
+                                    <div class="bg-light-danger px-1 mt-1 mx-2 text-small rounded-pill
+                                    border-start border-danger border-5 text-truncate" style="width:95%">
+                                        Deleted Comment
+                                    </div>`;        
+                                }else{
+                                    parentHead = ``;    
+                                    reply = ``;
+                                }
+                            }else{
+                                
+                                reply = ` <span class='mx-1'>~</span> reply` 
+                                if (parent_user_id == user){
+                                    parent_name_dis = "You"
+                                }else{
+                                    parent_name_dis = getFirstWord(parent_user);
+                                }
+                                parentHead = `<a onclick="getInView('${parent}')">
+                                        <div class="bg-light px-1 txt-sm
+                                            border-start border-5 rounded-pill text-truncate">
+                                            <b>${parent_name_dis}</b>:  ${parent_content}
+                                        </div>
+                                    </a>`;
+                                
+                            }
+                            commentPopupHead =
+                            `
+                            <li class="d-block" id="commenthead${comment_id}">
+                                <div class='mb-1 text-primary txt-sm d-flex justify-content-between'>
+                                    <span> ${avatar} <span id="commentUser${comment_id}">${comment_name_dis}</span> <span>${reply}</span></span> 
+                                    <span>${comment_date}</span>
+                                </div>
+                                ${parentHead}
+                                <p class="m-0 p-0" id="commentContent${comment_id}">${comment_content}</p>
+                                <div class="mt-1 d-flex justify-content-start align-items-center">
+                                    <span class="text-small me-2 d-flex justify-content-start align-items-center" onclick="addReaction('${user}', '1', '${comment_id}')"><span class='likeicon-${comment_id}'>${like_icon}</span> <span class='likes-${comment_id}'>${likes}</span></span>
+                                    <span class="text-small me-2 d-flex justify-content-start align-items-center" onclick="addReaction('${user}', '2', '${comment_id}')"><span class='dislikeicon-${comment_id}'>${dislike_icon}</span> <span class='dislikes-${comment_id}'>${dislikes}</span></span>
+                                    <span class="text-small me-2 d-flex justify-content-start align-items-center text-primary" onclick="popReply('${comment_id}')" data-bs-dismiss="modal"><i class='bi bi-chat-text me-1'></i> Reply</span>
+                                    ${trash_bin}
+                                    
+                                </div>
+                            </li>`
+                            
+                             
+                            $("#commentPopupHead").html(commentPopupHead);
+                            
+                        }else{
+                            $("#commentPopupHead").html(`<p class='text-danger'>We couldn't load the comment. It might have been deleted or there's a temporary issue. Please try again.</p>`);
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        $("#commentPopupHead").html(`There was a server error while loading comment. Try again`);
+                    }
+                });
+
+                var CommentDialog = new bootstrap.Modal(document.getElementById('CommentDialog'))
+                CommentDialog.show();
+            }else{
+
+            }
+            
+               
+            
+            
+        }
+
+        function deleteComment(id){
+            $("#resicon").html(`<i class="bi bi-patch-question-fill text-danger"></in>`);
+            $("#restitle").html("Delete Comment");
+            $("#resbody").html("Are you sure you want to delete this comment? This step is irreversible");
+            $("#resfooter").html(`<div class='btn-inline'><button class='btn btn-text-danger' data-bs-dismiss='modal' onclick="deleteCom('${id}')">Delete</button><a class='btn btn-text-secondary' data-bs-dismiss='modal'>Dismiss</a></div>`);
+            var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+            myModal2.show();
+        }
+
+        function deleteCom(id){
+            var postData = {
+                comment: id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"deletecoment.php",
+                data: JSON.stringify(postData),
+                crossDomain: true,
+                cache: false,
+                contentType:"application/json",
+                dataType:"JSON", 
+
+                beforeSend: function() {
+
+                },
+                success: function(response) {
+                    if (response.length > 0){
+                        data = response[0].status;
+                        if (data == "success") {
+                            document.getElementById("toastPopup").classList.add("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Comment deleted successfully`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+
+                            forumId = getParameterByName("id");
+                            const retrievedUserString = sessionStorage.getItem("user");
+
+                        if (retrievedUserString) {
+                            userId = retrievedUser.id;
+
+                            offset = 0;
+                            limit = 15;
+                            total_record = 0;
+                            loading = false;
+                            $('#forumComments').empty();
+
+                            getComments(userId, forumId);
+
+                        }
+                        
+                        }else {
+                            document.getElementById("toastPopup").classList.add("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                           
+
+                        }
+                    }else{
+                        document.getElementById("toastPopup").classList.add("bg-danger");
+                        document.getElementById("toastPopup").classList.remove("bg-success");
+                        document.getElementById("toastPopup").classList.remove("bg-info");
+
+                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                        toast.show();
+                    }
+
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+                }
+            });
+        }
+
+        function addReaction(user, type, comment){
+            
+            forumId = getParameterByName("id");
+
+            var postData = {
+                user: user,
+                type: type,
+                commentId: comment,
+                forum: forumId
+            };
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"addReaction.php",
+                data: JSON.stringify(postData),
+                crossDomain: true,
+                cache: false,
+                contentType:"application/json",
+                dataType:"JSON", 
+
+                beforeSend: function() {
+
+                },
+                success: function(response) {
+                    if (response.length > 0){
+                        data = response[0].status;
+
+                        //get Comment
+                        $.ajax({
+                            type: "GET",
+                            url: SITE_URL+`ws.php?fc_user=${user}&forumComment=${comment}`, 
+                            dataType:"JSON",
+                            crossDomain: true,
+                            cache: false,
+                            beforeSend: function () { 
+                            },
+                            success: function (responseC) {
+                                if (responseC.length > 0){
+                                    
+                                    likes = responseC[0].likes;
+                                    dislikes = responseC[0].dislikes;
+                                    user_reaction = responseC[0].user_reaction;
+                                    
+                                    if(user_reaction){
+                                        if (user_reaction == "1"){
+                                            //You like
+                                            like_icon = `<i class='bi bi-hand-thumbs-up-fill text-danger me-1'></i>`;
+                                            dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                                        }else{
+                                            //You dislike
+                                            like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                            dislike_icon = `<i class='bi bi-hand-thumbs-down-fill text-warning me-1'></i>`;
+                                        }
+                                    }else{
+                                        //No reaction
+                                        like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                        dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                                    }
+                                    
+                                    
+                                    document.querySelectorAll('.likes-'+comment).forEach(element1 => {
+                                        element1.innerHTML = likes;
+                                    })           
+                                    
+                                    document.querySelectorAll('.dislikes-'+comment).forEach(element2 => {
+                                        element2.innerHTML = dislikes;
+                                    })
+
+                                    document.querySelectorAll('.likeicon-'+comment).forEach(element3 => {
+                                        element3.innerHTML = like_icon;
+                                    })
+
+                                    document.querySelectorAll('.dislikeicon-'+comment).forEach(element4 => {
+                                        element4.innerHTML = dislike_icon;
+                                    })
+                                    
+
+                                    
+                                }else{
+                                }
+                            },
+                            error: function(jqXHR, textStatus, errorThrown){}
+                        });     
+                        
+                        if (data == "success") {
+                            document.getElementById("toastPopup").classList.add("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+                            if (type == "1"){
+                                notifTxt = `You liked a comment`;
+                                
+
+                            }else{
+                                notifTxt = `You disliked a comment`;
+                                
+                            }
+                            
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = notifTxt;
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                        
+                        }else if(data == "removed"){
+                            document.getElementById("toastPopup").classList.add("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+                            if (type == "1"){
+                                notifTxt = `You unliked a comment`;
+                                
+                            }else{
+                                notifTxt = `You removed a dislike on a comment`;
+                                
+                            }
+                            
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = notifTxt;
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                            
+                        }else if(data == "updated"){
+                            document.getElementById("toastPopup").classList.add("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+                            if (type == "1"){
+                                notifTxt = `You liked a comment`;
+                                
+                            }else{
+                                notifTxt = `You disliked a comment`;
+                                
+
+                            }
+                            
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = notifTxt;
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                        }else {
+
+                        }
+                    }else{
+                    }
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+                   
+                }
+            });
+        }
+        
+        function getComments(user, forum){
+            if (loading) return;
+            loading = true;
+            $("#loading").show();
+
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?fc_forum=${forum}&fc_user=${user}&offset=${offset}&forumComments=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                },
+                success: function (response) {
+                    
+                    if (response.length > 0){
+                        offset += limit;
+                        
+                        document.getElementById("commentCount").innerHTML = formatNumber(response.length);
+                        
+
+                        for (var i = 0; i < response.length; i++ ){
+
+                            comment_id = response[i].comment_id;
+                            comment_content = response[i].comment_content;
+                            comment_date = response[i].comment_date;
+                            comment_user = response[i].comment_user;
+                            comment_user_id = response[i].comment_user_id;
+                            parent_content = response[i].parent_content;
+                            parent = response[i].parent;
+                            og_parent = response[i].og_parent;
+                            parent_user = response[i].parent_user;
+                            parent_user_id = response[i].parent_user_id;
+                            likes = response[i].likes;
+                            dislikes = response[i].dislikes;
+                            avatar_link = response[i].avatar_link;
+                            
+                            user_reaction = response[i].user_reaction;
+                            total_record = parseInt(response[i].total_record);
+                                
+                            document.getElementById("commentCount").innerHTML = formatNumber(total_record);
+                            trash_bin = ``
+                            if (comment_user_id == user){
+                                comment_name_dis = "You";
+                                user_bg=`user`
+                                avatar = ``
+                            }else{
+                                comment_name_dis = comment_user;
+                                user_bg=``
+                                avatar = `<img src="${SITE_URL_NORM}${avatar_link}" alt="avatar" class="avatar">`
+                            }
+
+                            if(user_reaction){
+                                if (user_reaction == "1"){
+                                    //You like
+                                    like_icon = `<i class='bi bi-hand-thumbs-up-fill text-danger me-1'></i>`;
+                                    dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                                }else{
+                                    //You dislike
+
+                                    like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                    dislike_icon = `<i class='bi bi-hand-thumbs-down-fill text-warning me-1'></i>`;
+                                }
+                            }else{
+                                //No reaction
+                                like_icon = `<i class='bi bi-hand-thumbs-up me-1'></i>`;
+                                dislike_icon = `<i class='bi bi-hand-thumbs-down me-1'></i>`;
+                            }
+                            comment_name_dis = getFirstWord(comment_name_dis);
+                            if (comment_date == "New"){
+                                comment_date = "New Comment";
+                                
+                                if (comment_user_id == user){
+                                    trash_bin = `<span class="text-small me-2 d-flex justify-content-start align-items-center text-danger" onclick="deleteComment('${comment_id}')"><i class='bi bi-trash3-fill me-1'></i> Delete</span>`
+                                }
+                            }     
+                            
+                            if (parent == "0"){
+                                if(og_parent !== "0"){
+                                
+                                    reply = ` <span class='mx-1'>~</span> reply` 
+
+                                    parentHead = `
+                                    <div class="bg-light-danger px-1 mt-1 mx-2 text-small rounded-pill
+                                    border-start border-danger border-5 text-truncate" style="width:95%">
+                                        Deleted Comment
+                                    </div>`;    
+                                }else{
+                                    parentHead = ``;    
+                                    reply = ``;
+
+                                }
+                            }else{
+                                
+                                reply = ` <span class='mx-1'>~</span> reply` 
+                                if (parent_user_id == user){
+                                    parent_name_dis = "You"
+                                    
+                                }else{
+                                    parent_name_dis = getFirstWord(parent_user);
+                                    
+                                }
+                                parentHead = `
+                                <div class="bg-light text-dark px-1 mt-1 mx-2 text-small rounded-pill
+                                    border-start border-5 text-truncate" onclick="getInView('${parent}')" style="width:95%">
+                                    <b>${parent_name_dis}</b>:  ${parent_content}
+                                </div>`;
+                                
+                            }
+                            commentHead =
+                            `
+                            <div class="message-item mb-3 ${user_bg}" id="commenthead${comment_id}" >
+                                ${avatar}
+                                <div class="content w-100">
+                                    <div class="title d-flex justify-content-between">
+                                        <span>
+                                            <span id="commentUser${comment_id}">${comment_name_dis}</span> 
+                                            <span>${reply}</span>
+                                        </span> 
+                                        ${comment_date}
+                                    </div>
+                                    ${parentHead}
+                                    <div class="bubble w-100" id="commentContent${comment_id}">
+                                        ${comment_content}
+                                    </div>
+                                    <div class="footer">
+                                        <div class="mt-1 d-flex justify-content-start align-items-center">
+                                            <span class="text-small me-2 d-flex justify-content-start align-items-center" onclick="addReaction('${user}', '1', '${comment_id}')"><span class="likeicon-${comment_id}">${like_icon}</span> <span class="likes-${comment_id}">${likes}</span></span>
+                                            <span class="text-small me-2 d-flex justify-content-start align-items-center" onclick="addReaction('${user}', '2', '${comment_id}')"><span class="dislikeicon-${comment_id}">${dislike_icon}</span> <span class="dislikes-${comment_id}">${dislikes}</span></span>
+                                            <span class="text-small me-2 d-flex justify-content-start align-items-center text-primary" onclick="popReply('${comment_id}')"><i class='bi bi-chat-text me-1'></i> Reply</span>
+                                            ${trash_bin}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            `
+                            $('#forumComments').append(commentHead);
+                            
+                        }
+
+                    }else{
+                        //No comments found for this discussion.
+                        $(window).off("scroll");
+                    
+                        if(total_record == 0){
+                            $('#forumComments').append(`<div class="fw-light mt-3 text-center">
+                                No comments found for this discussion.
+                            </div>`);
+                        }
+                        
+
+                    }
+                },complete: function() {
+                    loading = false;
+                    $("#loading").hide();
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+
+                    document.getElementById("forumComments").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while generating comments for this discussion. Please try again
+                    </p>`;
+                }
+            }); 
+        }
+
+        function deleteDiscussion(id){
+            $("#resicon").html(`<i class="bi bi-patch-question-fill text-danger"></i>`);
+            $("#restitle").html("Delete Discussion");
+            $("#resbody").html("Are you sure you want to delete this discussion? This step is irreversible");
+            $("#resfooter").html(`<div class='btn-inline'><button class='btn btn-text-danger' data-bs-dismiss='modal' onclick="deleteDis('${id}')">Delete</button><a class='btn btn-text-secondary' data-bs-dismiss='modal'>Dismiss</a></div>`);
+            var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+            myModal2.show();
+        }
+
+        function deleteDis(id){
+            var postData = {
+                discussion: id
+            };
+
+            $.ajax({
+                type: "POST",
+                url: SITE_URL+"deletediscussion.php",
+                data: JSON.stringify(postData),
+                crossDomain: true,
+                cache: false,
+                contentType:"application/json",
+                dataType:"JSON", 
+
+                beforeSend: function() {
+
+                },
+                success: function(response) {
+                    if (response.length > 0){
+                        data = response[0].status;
+                        if (data == "success") {
+                            document.getElementById("toastPopup").classList.add("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `Discussion deleted successfully`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+
+                            
+                            window.location = "forum.html";
+                        
+                        }else {
+                            document.getElementById("toastPopup").classList.add("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+
+                            document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                           
+
+                        }
+                    }else{
+                        document.getElementById("toastPopup").classList.add("bg-danger");
+                        document.getElementById("toastPopup").classList.remove("bg-success");
+                        document.getElementById("toastPopup").classList.remove("bg-info");
+
+                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                        toast.show();
+                    }
+
+                },
+                error: function(XMLHttpRequest, textStatus, errorThrown){
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+                }
+            });
+        }
+
+        $(document).ready(function() {
+
+            let commentheadVariable = window.location.hash ? window.location.hash.substring(1) : null;
+
+            if (commentheadVariable) {
+                
+                id = commentheadVariable.match(/\d+/)?.[0] || null;
+                getInView(id)
+                
+            } else {
+            }
+            
+            forumId = getParameterByName("id");
+            const retrievedUserString = sessionStorage.getItem("user");
+
+            if (retrievedUserString) {
+                userId = retrievedUser.id;
+                
+                
+                getComments(userId, forumId);
+
+
+                 // Infinite scroll
+                $(window).scroll(function() {
+                    if ($(window).scrollTop() + $(window).height() >= $(document).height() - 100) {
+                        getComments(userId, forumId);
+                    }
+                });
+                
+            }else{
+                document.getElementById("forumComments").classList.add("border-0");
+                document.getElementById("forumComments").innerHTML = 
+                `<p class="alert alert-danger" role="alert">
+                    A temporary error occurred. Please log out and log back in to continue
+                </p>`; 
+
+            }
+
+
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?forumId=${forumId}`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                },
+                success: function (response) {
+                    if (response.length > 0){
+                        forum_title = response[0].discussion_title;
+                        forum_content = response[0].discussion_content;
+                        discussion_status = response[0].discussion_status;
+                        forum_date = response[0].discussion_date;
+                        forum_id = response[0].discussion_id;
+                        comment_count = response[0].comment_count;
+                        discussion_user_avatar = response[0].discussion_user_avatar;
+                        discussion_user_name = response[0].discussion_user_name;
+                        discussion_user_id = response[0].discussion_user_id;
+                        
+                        
+                        if (discussion_user_id == "0"){
+                            user_avatar = ``
+                        }else{
+                            user_avatar = `<img src="${SITE_URL_NORM}${discussion_user_avatar}" alt="avatar" width='16' class="rounded ms-1">`
+                        }
+
+                        forum_user =`${user_avatar} `+ discussion_user_name;
+
+                        if(discussion_status == "1"){
+                            //active
+                            
+                            trash_bin = ``
+                        }else if(discussion_status == "2"){
+                            //pending
+                            
+                            trash_bin = `
+                            <a href="#" class="headerButton" class="text-danger" onclick="deleteDiscussion('${forum_id}')">
+                                <i class='bi bi-trash3-fill text-danger'></i>
+                            </a>`
+
+                            document.getElementById("pgErr").innerHTML = `<p class="alert alert-warning mb-2">This discussion isn't active - Pending</p>`;
+                            document.getElementById("contributeInput").readOnly = true;
+                            document.getElementById("contributeBtn").disabled = true;
+                        }else if(discussion_status == "3"){
+                            //rejected
+                            
+                            trash_bin = ``
+                            document.getElementById("pgErr").innerHTML = `<p class="alert alert-danger mb-2">This discussion wasn't approved</p>`;
+                            document.getElementById("contributeInput").readOnly = true;
+                            document.getElementById("contributeBtn").disabled = true;
+                        }
+
+                        document.getElementById("headerRight").innerHTML = trash_bin;
+                        document.getElementById("forumDate").innerHTML = forum_date;
+                        document.getElementById("forumUser").innerHTML = forum_user;
+
+                        document.getElementById("forumTitle").innerHTML = forum_title;
+                        document.getElementById("forumSummary").innerText = forum_content;
+                        makeSumSmal()
+                        document.getElementById("commentCount").innerHTML = comment_count;
+                        document.getElementById("commentCount").innerHTML = comment_count;
+                        
+                       
+                        
+                    }else{
+                        document.getElementById("pgErr").innerHTML = 
+                        `<p class="alert alert-danger mb-2" role="alert">
+                            A server error occured while generating forum details. Please try again
+                        </p>`;    
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    document.getElementById("pgErr").innerHTML = 
+                        `<p class="alert alert-danger mb-2" role="alert">
+                            A server error occured while generating forum details. Please try again
+                        </p>`;
+                }
+            }); 
+
+        });
+    
+        function makeSumSmal(){ 
+            const summary = document.getElementById("forumSummary");
+            const button = document.getElementById("toggleButton");
+            const fullText = summary.innerText;
+            const maxLength = 150;
+            
+            if (fullText.length > maxLength) {
+                
+                const shortText = fullText.slice(0, maxLength) + "...";
+                let isExpanded = false;
+
+                summary.innerText = shortText;
+                button.style.display = "inline";
+
+                button.addEventListener("click", function () {
+                    if (isExpanded) {
+                        summary.innerText = shortText;
+                        button.innerText = "See More";
+                    } else {
+                        summary.innerText = fullText;
+                        button.innerText = "See Less";
+                    }
+                    isExpanded = !isExpanded;
+                });
+            }
+        }
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

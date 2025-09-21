@@ -1,0 +1,20 @@
+{
+  "name": "purple-heart",
+  "version": "1.1.0",
+  "description": "A supportive community app to connect, share, and find inspiration.",
+  "type": "module",
+  "keywords": [
+    "capacitor",
+    "mobile"
+  ],
+  "dependencies": {
+    "@capacitor/android": "^7.2.0",
+    "@capacitor/assets": "^3.0.5",
+    "@capacitor/core": "^7.2.0",
+    "@capacitor/ios": "^7.3.0",
+    "@capacitor/splash-screen": "^7.0.1"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^7.2.0"
+  }
+}

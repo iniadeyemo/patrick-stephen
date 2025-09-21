@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Blog</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+    <!--Bootstrap icon-->
+    <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body class="bg-white">
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary-grad text-light rounded-bottom">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <i class='bi bi-chevron-left'></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+            
+        </div>
+        <div class="right">
+            
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+        <div class="section mt-5">
+            <div id="pgErr"></div>
+            <h1 id="blogTitle">
+                [blogTitle]
+            </h1>
+            <div class="blog-header-info mt-2 mb-2">
+                <div id="blogDate">
+                    [blogDate]
+                </div>
+            </div>
+            <div class="lead" id="blogSummary">
+                [blogSummary]
+            </div>
+        </div>
+
+        <div class="section mt-2">
+            
+            <figure>
+                <img src="" alt="image" id="blogImg" class="imaged img-fluid">
+            </figure>
+            <p id="blogPost">
+                [blogPost]
+            </p>
+            
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+    <div id="toastPopup" class="toast-box toast-top">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+        function getCurrentURL() {
+            return window.location.href;
+        }
+        $(document).ready(function() {
+
+            blogId = getParameterByName("id");
+            
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?blogId=${blogId}`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                },
+                success: function (response) {
+                    if (response.length > 0){
+                        blog_title = response[0].blog_title;
+                        blog_image = response[0].blog_image;
+                        blog_summary = response[0].blog_summary;
+                        blog_date = response[0].blog_date;
+
+                        document.getElementById("blogDate").innerHTML = blog_date;
+                        document.getElementById("blogImg").src = `${SITE_URL_NORM}${blog_image}`;
+                        document.getElementById("blogTitle").innerHTML = blog_title;
+                        document.getElementById("blogSummary").innerHTML = blog_summary;
+                        document.getElementById("blogPost").innerHTML = "Loading...";
+                        
+                       
+                        var xmlhttp = new XMLHttpRequest();
+                        xmlhttp.onreadystatechange = function() {
+                        if (this.readyState == 4 && this.status == 200) {
+                            
+                            response = JSON.parse(this.responseText);
+                            blogArticle = response[0].blog_article;
+                            
+                             var fblogArticle = blogArticle.replace(/\[/g, "<");
+                             fblogArticle = fblogArticle.replace(/\]/g, ">");
+
+                             document.getElementById("blogPost").innerHTML = fblogArticle;
+                        }
+                        };
+                        xmlhttp.open("GET",SITE_URL+`ws.php?getBlogPost=${blogId}`,true);
+                        xmlhttp.send();
+                    }else{
+                        
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    document.getElementById("pgErr").innerHTML = 
+                        `<p class="alert alert-outline-danger mb-2" role="alert">
+                            A server error occured while generating blog article. Please try again
+                        </p>`;
+                }
+            }); 
+            
+        
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

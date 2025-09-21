@@ -1,0 +1,331 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Edit Profile</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+    
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary-grad text-light rounded-bottom">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <i class='bi bi-chevron-left'></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+            Edit Profile  
+        </div>
+        <div class="right">
+        
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+        <div class="section mt-5" style="padding: 0;">
+
+            <div class="card shadow-none">
+                <div class="card-body pb-1">
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label>Full name</label>
+                            <input type="text" class="form-control custom_input pt-4 pb-4" id="fullname" placeholder="Fullname">
+                            <i class="clear-input">
+                                <i class='bi bi-x-circle-fill text-danger'></i>
+                            </i>
+                        </div>
+                        
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label>Email</label>
+                            <input type="email" class="form-control custom_input pt-4 pb-4" id="email" placeholder="Email">
+                        </div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label>Current password</label>
+                            <input type="password" class="form-control custom_input pt-4 pb-4" id="pass" placeholder="Current Password">
+                            <i class="clear-input">
+                                <i class='bi bi-x-circle-fill text-danger'></i>
+                            </i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group p-2 transparent">
+                <button type="submit" class="btn btn-primary btn-block btn-lg" id="editBtn">Save changes</button>
+            </div>
+
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+    
+    <div id="toastPopup" class="toast-box toast-top">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+    <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content border">
+                <div class="modal-icon" id='resicon'>
+                    
+                </div>
+                <div class="modal-header">
+                    <h5 class="modal-title" id='restitle'></h5>
+                </div>
+                <div class="modal-body" id = "resbody">
+
+                    
+                </div>
+                <div class="modal-footer" id="resfooter">
+                    <div class='btn-inline'><a href='#' class='btn btn-text-primary' data-bs-dismiss='modal'>Ok</a></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+        
+      <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+
+    <script>
+        
+        $(document).ready(function() {
+            loaddata();
+
+            $("#editBtn").click(function() {
+
+                var fullname = $("#fullname").val();
+                var email = $("#email").val();
+                var pass = $("#pass").val();
+
+                document.getElementById("editBtn").disabled = true;
+                $("#editBtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+
+                if (($.trim(fullname).length <= 0 )){
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+                    
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "Please enter a valid name";
+                    
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+
+                    document.getElementById("editBtn").disabled = false;
+                $("#editBtn").html('Save changes');
+                                        
+                }else if (($.trim(email).length <= 0 )){
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-info")
+                    
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "Please enter a valid email address";
+                    
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+
+                    document.getElementById("editBtn").disabled = false;
+                $("#editBtn").html('Save changes');
+                                        
+                }else if (($.trim(pass).length <= 0 )){
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-info")
+                    
+                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "Authorize changes with your password";
+                    
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+
+                    document.getElementById("editBtn").disabled = false;
+                $("#editBtn").html('Save changes');
+                                        
+                }else{
+                    const retrievedUserString = sessionStorage.getItem("user");
+
+                    if (retrievedUserString) {
+                        userId = retrievedUser.id;
+
+
+                        var postData = {
+                            email: email,
+                            name: fullname,
+                            pass: pass,
+                            id: userId
+                        };
+
+                        $.ajax({
+                            type: "POST",
+                            url: SITE_URL+"editprofile.php",
+                            data: JSON.stringify(postData),
+                            crossDomain: true,
+                            cache: false,
+                            contentType:"application/json",
+                            dataType:"JSON", 
+
+                            beforeSend: function() {
+                                $("#editBtn").html('Proccessing <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                            },
+                            success: function(response) {
+                                
+                                $("#editBtn").html('Save changes');
+                                document.getElementById("editBtn").disabled = false;
+                                if (response.length > 0){
+                                    data = response[0].status;
+                                    // 
+                                    if (data == "success") {
+                                        
+                                        var saveData = {
+                                            email: email,
+                                            name: fullname,
+                                            id: userId
+                                        };
+                                        dataUserStr = JSON.stringify(saveData);
+                                        sessionStorage.setItem('user', dataUserStr);
+
+                                        document.getElementById("pass").value = "";
+
+                                        document.getElementById("toastPopup").classList.add("bg-success");
+                                        document.getElementById("toastPopup").classList.remove("bg-danger");
+                                        document.getElementById("toastPopup").classList.remove("bg-info");
+                                    
+                                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "Profile successfully updated!";
+
+                                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                        toast.show();
+                                    }else if (data == "exist") {
+
+                                        document.getElementById("toastPopup").classList.remove("bg-success");
+                                        document.getElementById("toastPopup").classList.add("bg-danger");
+                                        document.getElementById("toastPopup").classList.remove("bg-info");
+                                    
+                                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "This email has already been used";
+
+                                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                        toast.show();
+                                    }else if (data == "wrong") {
+
+                                        document.getElementById("toastPopup").classList.remove("bg-success");
+                                        document.getElementById("toastPopup").classList.add("bg-danger");
+                                        document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = "Password inserted is incorrect";
+
+                                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                        toast.show();
+                                    }else {
+                                        document.getElementById("toastPopup").classList.add("bg-danger");
+                                        document.getElementById("toastPopup").classList.remove("bg-success");
+                                        document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                        document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                        let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                        toast.show();
+
+                                    }
+                                }else{
+                                    document.getElementById("toastPopup").classList.add("bg-danger");
+                                    document.getElementById("toastPopup").classList.remove("bg-success");
+                                    document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                    document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                    toast.show();
+                                }
+
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown){
+                                document.getElementById("editBtn").disabled = false;
+                                $("#editBtn").html('Save changes');
+
+                                document.getElementById("toastPopup").classList.add("bg-danger");
+                                document.getElementById("toastPopup").classList.remove("bg-success");
+                                document.getElementById("toastPopup").classList.remove("bg-info");
+
+                                document.getElementById("toastPopupA").href = "#";document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                toast.show();
+                            }
+                        });
+
+                    }
+                    
+                }
+
+            });
+        });
+
+        function loaddata(){
+            const retrievedUserString = sessionStorage.getItem("user");
+
+            if (retrievedUserString) {
+                userId = retrievedUser.id;
+                userName = retrievedUser.name;
+                userEmail = retrievedUser.email;
+
+                document.getElementById("fullname").value = userName;
+                document.getElementById("email").value = userEmail;
+            }
+        }
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,373 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Login</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+    <div class="app">
+
+        <!-- Preloader -->
+        <div id="preloader">
+            <div class="spinner"></div>
+        </div>
+
+        <!-- App Header -->
+        <div class="appHeader no-border transparent position-absolute" id="appHead">
+            <div class="left">
+            </div>
+            <div class="pageTitle"></div>
+            <div class="right">
+            </div>
+        </div>
+        <!-- * App Header -->
+
+        <!-- App Capsule -->
+        <div id="appCapsule">
+
+            <div class="section mt-5">
+                
+                <h1 class="mb-2 ">Welcome back</h1>
+                <h4 class="section_caption fw-light">Login to your community</h4>
+            </div>
+
+            <div class="section mb-5" style="padding: 0;">
+
+                <div class="card shadow-none" >
+                    <div class="card-body pb-1">
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                
+                                <input type="text" class="form-control custom_input pt-4 pb-4" id="email" placeholder="Email address">
+                                <i class="clear-input">
+                                    <i class='bi bi-x-circle-fill text-danger'></i>
+                                </i>
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold" id="email_error"></div>
+                        </div>
+
+                        <div class="form-group boxed">
+                            <div class="input-wrapper">
+                                
+                                <input type="password" class="form-control pt-4 pb-4 custom_input" id="pass" placeholder="Password">
+                                <i class="clear-input">
+                                    <i class='bi bi-x-circle-fill text-danger'></i>
+                                </i>
+                            </div>
+                            <div class="input-info text-danger px-3 fw-bold " id="password_error"></div>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-links m-2">
+                    
+                    <div><a href="forgot-password.html" class="">Forgot password?</a></div>
+                </div>
+
+                <div class="form-group p-2 transparent">
+                    <button type="submit" class="btn btn-primary btn-block btn-lg" id="loginbtn">Login</button>
+                </div>
+
+                <div class=" m-2 mt-4 text-center">
+                    
+                    <div class="text-center">Don't have an account? <a href="register.html" class="text-primary text-bold">Sign up</a></div>
+                </div>
+                
+            </div>
+
+        </div>
+        <!-- * App Capsule -->
+
+
+        <div class="modal fade dialogbox" id="res" data-bs-backdrop="static" tabindex="-2" style="z-index:99999999999" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content border">
+                    <div class="modal-icon" id='resicon'>
+                       
+                    </div>
+                    <div class="modal-header">
+                        <h5 class="modal-title" id='restitle'></h5>
+                    </div>
+                    <div class="modal-body" id = "resbody">
+    
+                        
+                    </div>
+                    <div class="modal-footer " id="resfooter">
+                        <div class="btn-inline">
+                            <a  class="btn btn-secondary" data-bs-dismiss="modal">OK</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+    
+    <!-- ====== JS Files ======  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+
+    <script type="text/javascript">
+        user = sessionStorage.getItem('user');
+        
+        if (user !== null) {
+            window.location = "home.html";
+        }
+
+        
+
+        $(document).ready(function() {
+
+            email = localStorage.getItem('email');
+            if(email){
+                $('#email').val(email);
+            }
+            $("#loginbtn").click(function() {
+
+                var login_user = $("#email").val();
+                var login_pass = $("#pass").val();
+                document.getElementById("password_error").innerHTML = "";
+                document.getElementById("email_error").innerHTML = "";
+
+                var input_pass = document.getElementById("pass");
+                var input_email = document.getElementById("email");
+
+                input_pass.classList.remove("border-danger");
+                input_email.classList.remove("border-danger");
+
+                document.getElementById("pass").readOnly = true;
+                document.getElementById("email").readOnly = true;
+                document.getElementById("loginbtn").disabled = true;
+
+                $("#loginbtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                if (login_user == ""){
+
+                    document.getElementById("email_error").innerHTML = "Please enter a valid email address or username";
+                    input_email.classList.add("border-danger");
+
+                    document.getElementById("pass").readOnly = false;
+                    document.getElementById("email").readOnly = false;
+                    document.getElementById("loginbtn").disabled = false;
+                    $("#loginbtn").html('Login');
+
+                }else if (login_pass == ""){
+
+                    document.getElementById("password_error").innerHTML = "Please enter a valid password";
+                    input_pass.classList.add("border-danger");
+
+                    document.getElementById("pass").readOnly = false;
+                    document.getElementById("email").readOnly = false;
+                    document.getElementById("loginbtn").disabled = false;
+                    $("#loginbtn").html('Login');
+
+                }else{
+                    var postData = {
+                        email: login_user,
+                        password: login_pass
+                    };
+
+                    if ($.trim(login_user).length > 0 & $.trim(login_pass).length > 0) {
+                        $.ajax({
+                            type: "POST",
+                            url: SITE_URL+"login.php",
+                            data: JSON.stringify(postData),
+                            crossDomain: true,
+                            cache: false,
+                            contentType:"application/json",
+                            dataType:"JSON", 
+
+                            beforeSend: function() {
+                                $("#loginbtn").html('Connecting <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+                            },
+                            success: function(response) {
+                                document.getElementById("pass").readOnly = false;
+                                document.getElementById("email").readOnly = false;
+                                document.getElementById("loginbtn").disabled = false;
+                                $("#loginbtn").html('Login');
+
+                                if(response.length > 0){
+                                    data = response[0].status;
+                                    
+                                    dataName = response[0].name;
+                                    dataId = response[0].id;
+                                    dataEmail = response[0].email;
+                                    if (data == "success") {
+                                        dataUser = {
+                                            name: dataName,
+                                            email: dataEmail,
+                                            id: dataId
+                                        };
+                                        dataUserStr = JSON.stringify(dataUser);
+                                        sessionStorage.setItem('user', dataUserStr);
+                                        localStorage.setItem('email', dataEmail);
+                                        $("#loginbtn").html('Successful');
+                                        window.location = "home.html";
+                        
+                                    
+                                    }else if(data == "password_error"){
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Password incorrect");
+                                        $("#resbody").html("Please enter the correct password or recover password");
+                                        $("#resfooter").html("<div class='btn-inline'>"+
+                                            "<a class='btn btn-text-primary' data-bs-dismiss='modal'>"+
+                                            "Okay"+
+                                            "</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                        input_pass.classList.add("border-danger");
+                                        
+                                    }else if(data == "notfound"){
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("User not found");
+                                        $("#resbody").html("Please enter a registered email address or create an account");
+                                        $("#resfooter").html("<div class='btn-inline'>"+
+                                            "<a class='btn btn-text-primary' data-bs-dismiss='modal'>"+
+                                            "Okay"+
+                                            "</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+
+                                        input_email.classList.add("border-danger");
+                                        
+                                        
+                                    }else if(data == "profileincomplete"){
+                                        input_pass.classList.add("border-danger");
+                                        input_email.classList.add("border-danger");
+
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Registration Incomplete");
+                                        $("#resbody").html("You are yet to complete your registration.");
+                                        $("#resfooter").html("<div class='btn-inline'><a href='register2.html?email="+login_user+"' class='btn btn-text-primary'>Complete registration</a>"+
+                                            "<a class='btn btn-text-danger' data-bs-dismiss='modal'>"+
+                                            "Dismiss"+
+                                            "</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                        
+                                        
+                                    }else if(data == "verify"){
+                                        input_pass.classList.add("border-danger");
+                                        input_email.classList.add("border-danger");
+
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("User not verified");
+                                        $("#resbody").html("You have to be verified to login.");
+                                        $("#resfooter").html("<div class='btn-inline'>"+
+                                            "<a href='verification.html?email="+login_user+"' class='btn btn-text-primary' >"+
+                                            "Verify account"+
+                                            "</a>"+
+                                            "<a  class='btn btn-text-danger' data-bs-dismiss='modal'>"+
+                                            "Dismiss"+
+                                            "</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                    }else if (data == "disabled") {
+                                        input_pass.classList.add("border-danger");
+                                        input_email.classList.add("border-danger");
+                                        
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Disabled account");
+                                        $("#resbody").html("Your account has been suspended for violating our policies.");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+                                    } else {
+                                        
+                                        $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                        $("#restitle").html("Connection Error");
+                                        $("#resbody").html("An error occured. Please try again");
+                                        $("#resfooter").html("<div class='btn-inline'><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                        var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                        myModal2.show();
+
+                                    }
+                                }else{
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server Error");
+                                    $("#resbody").html("Couldn't process data. Please try again");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+
+                                }
+                            },
+                            error: function(XMLHttpRequest, textStatus, errorThrown){
+                                document.getElementById("pass").readOnly = false;
+                                document.getElementById("email").readOnly = false;
+                                document.getElementById("loginbtn").disabled = false;
+                                $("#loginbtn").html('Login');
+
+                                if (textStatus == 'timeout'){
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Bad network connection");
+                                    $("#resbody").html("Connection seems poor or offline");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a> <a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }else{
+                                    $("#resicon").html("<i class='bi bi-x-circle-fill text-danger'></i>");
+                                    $("#restitle").html("Server connection");
+                                    $("#resbody").html("Error in connection to server");
+                                    $("#resfooter").html("<div class='btn-inline'><a onclick='window.location.reload();' class='btn btn-text-primary'>Reload</a><a class='btn btn-text-danger' data-bs-dismiss='modal'>Dismiss</a></div>");
+                                    var myModal2 = new bootstrap.Modal(document.getElementById('res'))
+                                    myModal2.show();
+                                }
+                            }
+                        });
+                    } else {
+                        document.getElementById("email_error").innerHTML = "Please enter a valid email address";
+                        input_email.classList.add("border-danger");
+
+                        document.getElementById("pass").readOnly = false;
+                        document.getElementById("email").readOnly = false;
+                        document.getElementById("loginbtn").disabled = false;
+                        $("#loginbtn").html('Login');
+                    }
+                        //return false;
+                }
+
+                
+
+            });
+                
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appHead',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+</body>
+
+</html>

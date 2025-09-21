@@ -1,0 +1,288 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Contact</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader bg-primary-grad text-light rounded-bottom">
+        <div class="left">
+            <a href="#" class="headerButton goBack">
+                <i class='bi bi-chevron-left'></i>
+            </a>
+        </div>
+        <div class="pageTitle">
+            Contact
+        </div>
+        <div class="right">
+            
+        </div>
+    </div>
+    <!-- * App Header -->
+
+    <!-- App Capsule -->
+    <div id="appCapsule">
+
+        <div class="section mt-5">
+            <div class="card shadow-none">
+                <div class="card-body">
+                    
+                    <div class="text-center">
+                        <h2 class="text-primary">Get in Touch</h2>
+                        <p>Fill the form to contact us</p>
+                    </div>
+                    
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="userName">Your name</label>
+                            <input type="text" class="form-control custom_input pt-4 pb-4" id="userName" placeholder="Your name" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="userEmail">Email address</label>
+                            <input type="email" class="form-control custom_input pt-4 pb-4" id="userEmail" placeholder="E-mail" readonly>
+                        </div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="userEmail">Subject</label>
+                            <input type="text" class="form-control custom_input pt-4 pb-4" id="contactSubject" placeholder="Subject" maxlength="100">
+                        </div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="input-wrapper">
+                            <label class="label" for="contactMsg">Message</label>
+                            <textarea rows="4" id="contactMsg" maxlength="250" class="form-control custom_input"
+                                placeholder="Message"></textarea>
+                            <i class="clear-input">
+                                <i class='bi bi-x-circle-fill text-danger'></i>
+                            </i>
+                        </div>
+                    </div>
+
+                    <div class="mt-2">
+                        <button type="button" class="btn btn-primary btn-lg btn-block" id="sendBtn">Send</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <!-- * App Capsule -->
+
+    <div id="toastPopup" class="toast-box toast-top">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+<!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script><script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+
+        $(document).ready(function() {
+            //NAME 
+            const retrievedUserString = sessionStorage.getItem("user");
+
+            if (retrievedUserString) {
+                // Parse the JSON string back into a JavaScript object
+                retrievedUser = JSON.parse(retrievedUserString);
+                let userId = retrievedUser.id;
+                let userName = retrievedUser.name;
+                let userEmail = retrievedUser.email;
+                document.getElementById("userName").value = userName;
+                document.getElementById("userEmail").value = userEmail;
+            }
+
+            $("#sendBtn").click(function() {
+
+                var contactMsg = $("#contactMsg").val();
+                var contactSubject = $("#contactSubject").val();
+                                
+                document.getElementById("sendBtn").disabled = true;
+                $("#sendBtn").html('Validating <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+
+                if (($.trim(contactMsg).length <= 0 )){
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+                    document.getElementById("toastPopupA").href = "#";
+                    document.getElementById("toast-content").innerHTML = "Message can't be empty!";
+                    
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+                    
+                    document.getElementById("sendBtn").disabled = false;
+                    $("#sendBtn").html('Send');
+                    
+                }else if (($.trim(contactSubject).length <= 0 )){
+                    document.getElementById("toastPopup").classList.remove("bg-success");
+                    document.getElementById("toastPopup").classList.add("bg-danger");
+                    document.getElementById("toastPopup").classList.remove("bg-info");
+                    document.getElementById("toastPopupA").href = "#";
+                    document.getElementById("toast-content").innerHTML = "Subject can't be empty!";
+                    
+                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                    toast.show();
+                                        
+                    document.getElementById("sendBtn").disabled = false;
+                    $("#sendBtn").html('Send');
+
+                }else{
+                   
+                    
+                    var postData = {
+                        message: contactMsg,
+                        subject: contactSubject,
+                        user: userId
+                    };
+
+                    $.ajax({
+                        type: "POST",
+                        url: SITE_URL+"sendMessage.php",
+                        data: JSON.stringify(postData),
+                        crossDomain: true,
+                        cache: false,
+                        contentType:"application/json",
+                        dataType:"JSON", 
+
+                        beforeSend: function() {
+                            $("#sendBtn").html('Proccessing <span class="spinner-grow spinner-grow-sm m-1" role="status" aria-hidden="true"></span>');
+
+                        },
+                        success: function(response) {
+                            
+                            document.getElementById("sendBtn").disabled = false;
+                            $("#sendBtn").html('Send');
+
+                            if (response.length > 0){
+                                data = response[0].status;
+                                // 
+                                if (data == "success") {
+
+                                    document.getElementById("contactMsg").value = "";
+
+                                    document.getElementById("toastPopup").classList.add("bg-success");
+                                    document.getElementById("toastPopup").classList.remove("bg-danger");
+                                    document.getElementById("toastPopup").classList.remove("bg-info");
+                                    document.getElementById("toastPopupA").href = "#";
+                                    document.getElementById("toast-content").innerHTML = "Message Sent!";
+
+                                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                    toast.show();
+                                }else {
+                                    document.getElementById("toastPopup").classList.add("bg-danger");
+                                    document.getElementById("toastPopup").classList.remove("bg-success");
+                                    document.getElementById("toastPopup").classList.remove("bg-info");
+                                    document.getElementById("toastPopupA").href = "#";
+                                    document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                    let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                    toast.show();
+
+                                }
+                            }else{
+                                document.getElementById("toastPopup").classList.add("bg-danger");
+                                document.getElementById("toastPopup").classList.remove("bg-success");
+                                document.getElementById("toastPopup").classList.remove("bg-info");
+                                document.getElementById("toastPopupA").href = "#";
+                                document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                                toast.show();
+                            }
+
+                        },
+                        error: function(XMLHttpRequest, textStatus, errorThrown){
+                            document.getElementById("sendBtn").disabled = false;
+                            $("#sendBtn").html('Send');
+
+                            document.getElementById("toastPopup").classList.add("bg-danger");
+                            document.getElementById("toastPopup").classList.remove("bg-success");
+                            document.getElementById("toastPopup").classList.remove("bg-info");
+                            document.getElementById("toastPopupA").href = "#";
+                            document.getElementById("toast-content").innerHTML = `There was a server error. Retry`
+                            let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                            toast.show();
+                        }
+                    });
+                    
+                }
+
+            });
+
+        });
+
+
+
+        contactMsg = document.getElementById("contactMsg");
+        contactMsgmaxLength = contactMsg.maxLength;
+
+        contactMsg.addEventListener("input", function () {
+            if (this.value.length >= contactMsgmaxLength) {
+                this.value = this.value.substring(0, contactMsgmaxLength);
+                document.getElementById("toastPopupA").href = "#";
+                document.getElementById("toast-content").innerHTML = `Message has reached character limit (${contactMsgmaxLength} char)`
+                document.getElementById("toastPopup").classList.remove("bg-success");
+                document.getElementById("toastPopup").classList.add("bg-danger");
+                document.getElementById("toastPopup").classList.remove("bg-info");
+                let toast = new bootstrap.Toast(document.getElementById('toastPopup'));
+                toast.show();
+            }
+
+            
+        });
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appCapsule',
+            onRefresh: function() { location.reload(); }
+        });
+    </script>
+
+</body>
+
+</html>

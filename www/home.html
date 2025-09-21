@@ -1,0 +1,497 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="theme-color" content="#561370">
+    <title>Purple Heart App</title>
+    <meta name="description" content="Patrick Stephen Widow App">
+    <meta name="keywords"
+        content="widows, foundation, patrick stephen" >
+    <link rel="icon" type="image/png" href="assets/img/favicon.png" sizes="32x32">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/img/icon/192x192.png">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="manifest" href="manifest.json">
+
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/jquery.min.js"></script>
+    <script src="assets/js/index.js"></script>
+       <!--Bootstrap icon-->
+        <link rel="stylesheet" href="assets/icons/bootstrap icons/bootstrap-icons.css">
+</head>
+
+<body>
+
+    <!-- Preloader -->
+    <div id="preloader">
+        <div class="spinner"></div>
+    </div>
+
+    <!-- App Header -->
+    <div class="appHeader appHeaderHome p-3 no-border" id="appHead">
+        <div class="inAppHeader row py-2">
+            <div class="col-9 d-flex justify-content-start align-items-center">
+                
+                <img id="avi" width="40" class="me-1">
+                <h2 class="text-primary pg-ttl mb-0">Welcome <br><span id="userFName">[userName]</span>!</h2>
+            </div>
+            <div class="col-3 d-flex justify-content-end align-items-center">
+                <a href="notification.html" class="position-relative fs-2">
+                    <i class='bi bi-bell icon'></i>
+                    <span class="position-absolute top-0 start-100 translate-middle badge badge-danger d-none notif-count"></span>
+                </a>
+            </div>
+        </div>
+        
+        <div class="appHeaderCaption fw-light">
+            A community of strength and shared experience
+        </div>
+        
+    </div>
+    <!-- * App Header -->
+
+
+    <!-- App Capsule -->
+    <div id="appCapsule" >
+
+        <div class="section">
+            <div class="bg-primary-grad border-start border-5 p-3 py-4">
+                <span id="mq_content" class="fst-italic"></span>
+                <div id="mq_author" class="fw-bold"></div>
+            </div>
+
+        </div>
+
+        <div class="section mt-4">
+            <div class="section-heading">
+                <h6 class="title fw-bold">My Discussions (<span id="my_CNt"></span>)</h6>
+            </div>
+
+            <ul class="listview simple-listview border-0" id="userforumCont">
+                
+            </ul>
+
+        </div>
+
+        <div class="section mt-4">
+            <a class="d-flex justify-content-center align-items-center" href="forum.html?tab=t">
+                <u>
+                    <i class="bi bi-fire me-1 text-danger"></i>
+                    Check out other trending discussions
+                </u>
+            </a>
+        </div>
+
+        <div class="section mt-4" >
+            <div class="section-heading">
+                <h6 class="title fw-bold">Inspiring Story</h6>
+                <a href="stories.html">
+                    See more
+                </a>
+            </div>
+
+            <div id="getStory"></div>
+
+        </div>
+        
+
+        <div class="section mt-4">
+            <div class="section-heading">
+                <h6 class="title fw-bold">Latest Blog</h6>
+            </div>
+
+            <div class="transactions" id="blog-container">
+            </div>
+            <div class="text-end my-2" id="viewmoreB"></div>
+        </div>
+
+
+        <div class="section mt-4 ">
+            <div class="section-heading">
+                <h6 class="title fw-bold">About <span id="appName">App</span></h6>
+            </div>
+            <div>
+                <img src="assets/img/about-us-2.jpeg" alt="image" class="w-100 imaged default me-2 mb-1">
+
+                <span id="aboutSummary">
+                    We aim to draw support and awareness for young widows in Nigeria and to take away the odd stereotype 
+                    abnished with young widows in Africa most especially Nigeria.
+                </span>
+
+                <div class="mt-2 text-center">
+                    <a class="btn btn-primary me-1" href="about.html">Read More</a>
+                    <a class="btn btn-outline-primary" href="contact.html">Contact Us</a>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+    <!-- * App Capsule -->
+
+    <div id="toastPopup" class="toast-box toast-bottom">
+        <a id="toastPopupA" class="text-light">
+            <div class="in">
+                <div class="text" id="toast-content">
+                    
+                </div>
+            </div>
+        </a>
+        <button type="button" class="btn btn-sm btn-text-light close-button">OK</button>
+    </div>
+
+    <!-- App Bottom Menu -->
+    <div class="appBottomMenu">
+        <a href="home.html" class="item active">
+            <div class="col">
+                <i class="bi bi-house-door-fill"></i>
+                <strong>Home</strong>
+            </div>
+        </a>
+        <a href="forum.html" class="item">
+            <div class="col">
+                <i class='bi bi-people'></i>
+                <strong>Discussions</strong>
+            </div>
+        </a>
+
+        <a href="stories.html" class="item">
+            <div class="col">
+                <i class='bi bi-trophy'></i>
+                <strong>Stories</strong>
+            </div>
+        </a>
+
+        <a href="blog.html" class="item">
+            <div class="col">
+                <i class='bi bi-newspaper'></i>
+                <strong>Blog</strong>
+            </div>
+        </a>
+        <a href="profile.html" class="item">
+            <div class="col">
+                <i class='bi bi-person'></i>
+                <strong>Profile</strong>
+            </div>
+        </a>
+    </div>
+    <!-- * App Bottom Menu -->
+
+    <!-- ========= JS Files =========  -->
+    <!-- Bootstrap -->
+    <script src="assets/js/lib/bootstrap.bundle.min.js"></script>
+    <!-- Ionicons -->
+    
+    <!-- Splide -->
+    <script src="assets/js/plugins/splide/splide.min.js"></script>
+    <!-- Base Js File -->
+    <script src="assets/js/base.js"></script>
+    <script src="assets/js/index.umd.min.js"></script>
+
+    <script>
+        function getRandomInt(min = 1, max = 40){
+            min = Math.ceil(min);
+            max = Math.floor(max);
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+        $(document).ready(function() {
+            //NAME 
+            const retrievedUserString = sessionStorage.getItem("user");
+
+            if (retrievedUserString) {
+                // Parse the JSON string back into a JavaScript object
+                retrievedUser = JSON.parse(retrievedUserString);
+                userName = retrievedUser.name;
+                userId = retrievedUser.id;
+                userFName = getFirstWord(userName);
+                document.getElementById("userFName").innerHTML = userFName;
+            }
+            //QUOTE
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?quote=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                    document.getElementById("mq_content").innerHTML = "Loading...";
+                },
+                success: function (response) {
+                    mq_content = response[0].mq_content;
+                    mq_author = response[0].mq_author;
+
+                    document.getElementById("mq_content").innerHTML = mq_content;
+                    if (mq_author !== ""){
+                        document.getElementById("mq_author").innerHTML = `- ${mq_author}`;
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    mq_content = `Remember, healing is a journey, not a destination. Be kind to yourself,
+                    allow yourself to grieve, and know that you are capable of finding joy and peace again`;
+                    document.getElementById("mq_content").innerHTML = mq_content;
+                }
+            }); 
+
+            //DISCUSSIONS
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?userForum=${userId}&userF=${userId}&getForum=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                    document.getElementById("userforumCont").innerHTML = "<div class='py-3 px-2'>Loading your discussions...</div>";
+                },
+                success: function (response) {
+                    document.getElementById("my_CNt").innerHTML = response.length;
+                    if (response.length > 0){
+                        $('#userforumCont').empty();
+                        
+                        for(var i = 0; i < response.length; i++){
+
+                            discussion_id = response[i].discussion_id;
+                            discussion_title = response[i].discussion_title;
+                            discussion_status = response[i].discussion_status;
+                            total_users = response[i].total_users;
+                            total_comments = response[i].total_comments;
+                            latest_comment = response[i].latest_comment;
+                            discussion_user_id = response[i].discussion_user_id;
+                            discussion_user_name = response[i].discussion_user_name;
+                            discussion_user_avatar = response[i].discussion_user_avatar;
+                            
+                            if (discussion_user_id == "0"){
+                                user_avatar = ``
+                            }else{
+                                user_avatar = `<img src="${SITE_URL_NORM}${discussion_user_avatar}" alt="avatar" width='16' class="rounded ms-1">`
+                            }
+                            
+                            if(discussion_user_id == userId){
+                                discussion_user_name = `${user_avatar} `+`You`
+                            }else{
+                                discussion_user_name =`${user_avatar} `+getFirstWord(discussion_user_name);
+                            }
+
+                            if (latest_comment == "New"){
+                                lc = `<span class='text-small me-2 d-flex justify-content-start align-items-center fw-bold text-primary'><i class='bi bi-record-circle me-1'></i> New comment </span>`
+                                
+                            }else{
+                                lc = ``
+                            }
+                            if(discussion_status == "1"){
+                                //active
+                                status_bg = ``
+                                status_txt = ``
+                                trash_bin = ``
+                            }else if(discussion_status == "2"){
+                                //pending
+                                status_bg = `bg-light-warning`
+                                status_txt = `<span class='badge bg-warning'>Pending</span>`
+                                trash_bin = `<span class="text-small me-2 d-flex justify-content-start align-items-center text-danger" onclick="deleteDisussion('${discussion_id}')"><i class='bi bi-trash3-fill me-1'></i> Delete</span>`
+                            }else if(discussion_status == "3"){
+                                //rejected
+                                status_bg = `bg-light-danger`
+                                status_txt = `<span class='badge bg-danger'>Rejected</span>`
+                                trash_bin = ``
+                            }
+                            
+                            forumHead =
+                            `<li class="d-block py-3 border-bottom ${status_bg}">
+                                <a href='forum-page.html?id=${discussion_id}'>
+                                    <h4>${discussion_title}</h4>
+                                    <div class="text-capitalize mb-1">Created by ${discussion_user_name}</div>
+                                    <div class="d-flex justify-content-start align-items-center">
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-people-fill me-1'></i> ${total_users}</span>
+                                        <span class="text-small me-2 d-flex justify-content-start align-items-center"><i class='bi bi-chat-text me-1'></i> ${total_comments}</span>
+                                        ${lc}
+                                        ${status_txt}
+                                    </div>
+                                </a>
+                            </li>`
+                            $('#userforumCont').append(forumHead);
+                        }                        
+                    
+                    }else{
+                        document.getElementById("userforumCont").classList.add("border-0");
+                        document.getElementById("userforumCont").innerHTML = `<div class="fw-light lead">
+                            You're not part of an active conversation at the moment.
+                            You can find interesting discussions in the trending and active lists, or you can create one yourself!
+                            <a href="forum.html">Browse Discussions</a>
+                        </div>`;
+                        
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    document.getElementById("userforumCont").classList.add("border-0");
+                    document.getElementById("userforumCont").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while generating your active discussions. Please try again
+                    </p>`;
+                }
+            }); 
+     
+            //STORY
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?limit=1&getstories=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () { 
+                },
+                success: function (response) {
+                    
+                    if (response.length > 0){
+                         
+                        story_id  = response[0].story_id;
+                        story_summary  = response[0].story_summary;
+                        story_author  = response[0].story_author;
+
+                        randNum = getRandomInt();
+                        storyHead =
+                        `<a href="stories.html?openId=${story_id}">
+                            <div class="card border-purple-${randNum} shadow p-2 rounded txt-sm">
+                                <div class="mb-1 fw-bold text-truncate text-center">${story_author}</div>
+                                <div class="text-justify">
+                                    ${story_summary}...
+                                    <b><u>Continue reading</u></b>
+                                </div>
+                            </div>
+                        </a>`
+                        $('#getStory').append(storyHead);
+                            
+                       
+                    }else{
+                       
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+
+                    document.getElementById("getStory").innerHTML = 
+                    `<p class="alert alert-danger" role="alert">
+                        A server error occured while loading stories. Please try again
+                    </p>`;
+                }
+            });
+
+            total_blog = 0;
+            //BLOG
+            $.ajax({
+                    type: "GET",
+                    url: SITE_URL+`ws.php?limit=4&blog=`, 
+                    dataType:"JSON",
+                    crossDomain: true,
+                    cache: false,
+                    beforeSend: function () { 
+                        document.getElementById("blog-container").innerHTML = "Loading...";
+                    },
+                    success: function (response) {
+                        document.getElementById("blog-container").innerHTML = "";
+                        if (response.length > 0){
+                            
+                            $.each(response[0].blog, function(index, item) {
+                                // Example: Display data in a table or list
+
+                                total_blog = parseInt(item.total_blog);
+                                blogd = `${item.blog_date}`;
+                                if (blogd == "New"){
+                                    dateSty = "fw-bold text-primary"
+                                    displayBD = `<i class='bi bi-record-circle me-1'></i> New Article`
+                                }else{
+                                    dateSty = ""
+                                    displayBD = blogd
+                                }
+                                blogHead = 
+                                `
+                                <a href='blog-post.html?id=${item.blog_id}' class="item">
+                                    <div class="detail">
+                                        <img src="${SITE_URL_NORM}${item.blog_image}" alt="${item.blog_title}" class="w-25 rounded me-2">
+                                        <div>
+                                            <strong>${item.blog_title}</strong>
+                                            <p class="${dateSty}">${displayBD}</p>
+                                        </div>
+                                    </div>
+                                </a>
+                                `;
+                                $('#blog-container').append(blogHead); //adapt to your table structure.
+
+                            });
+
+                            if (total_blog > 4){
+                                document.getElementById("viewmoreB").innerHTML = "<a href='blog.html'>View More</a>";
+                            }
+                        }else{
+                            document.getElementById("blog-container").innerHTML = "No blog article to display";
+                        }
+                    },
+                    error: function(jqXHR, textStatus, errorThrown){
+                        
+                        document.getElementById("blog-container").innerHTML = 
+                        `<p class="alert alert-danger" role="alert">
+                            A server error occured while generating blog articles. Please try again
+                        </p>`;
+                    }
+                }); 
+       
+            //ABOUT
+            var xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                
+                response = JSON.parse(this.responseText);
+                app_name = response[0].app_name;
+                summary = response[0].summary;
+                
+                document.getElementById("aboutSummary").innerHTML = `${summary}`;
+                document.getElementById("appName").innerHTML = `${app_name}`;
+                
+                
+            }
+            };
+            xmlhttp.open("GET",SITE_URL+`ws.php?getAbout=`,true);
+            xmlhttp.send();
+
+            //GET AVATAR #avi
+            let defAvi = "assets/img/avatar.png";
+            $.ajax({
+                type: "GET",
+                url: SITE_URL+`ws.php?user=${userId}&avatar=`, 
+                dataType:"JSON",
+                crossDomain: true,
+                cache: false,
+                beforeSend: function () {},
+                success: function (response) {
+                    
+                    if (response.length > 0){
+                        avatar_link = response[0].avatar_link;
+
+                        document.getElementById("avi").src = `${SITE_URL_NORM}${avatar_link}`;
+                        console.log ("Avatar successfully loaded")
+                    }else{
+                        document.getElementById("avi").src = `${defAvi}`;
+                        console.log ("No Avatar found")
+                    }
+                },
+                error: function(jqXHR, textStatus, errorThrown){
+                    document.getElementById("avi").src = `${defAvi}`;
+                    console.log ("Error loading Avatar")
+                                        
+                }
+            }); 
+        });
+        
+        /* global PullToRefresh */
+        PullToRefresh.init({
+            mainElement: '#appHead',
+            onRefresh: function() { location.reload(); }
+        });
+        
+  </script>
+
+</body>
+
+</html>
